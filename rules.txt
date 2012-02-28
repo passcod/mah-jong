@@ -1,0 +1,624 @@
+RULES USED BY THE MAH-JONG PROGRAMS
+
+The game currently implemented is a version of the classical Chinese
+game. The most convenient and comprehensive set of rules is that
+provided by A. D. Millington, "The Complete Book of Mah-Jongg", 
+Weidenfield & Nicolson (1993), ISBN 0 297 81340 4.
+In the following, M 103 denotes item 103 of the rules laid out in Chapter 3 
+of that book. I here describe only the differences from these
+rules, some of which differences are consequences of using computers,
+and some of which are points where my house rules differ from
+Millington's version. In due course, all variations (of Chinese
+classical) will be accommodated, if there is sufficient desire.
+
+Classification of tiles (M 1-8): the tiles are a standard Chinese set.
+The tiles do not have Arabic numerals, except for the flowers and
+seasons, where the identifying Chinese characters are too small to be
+legible. A numbered set is included in the distribution and can be
+used via the Tileset display preference.
+The flowers and seasons may be removed from the tile set by unsetting
+the  Flowers  game option.
+
+Preliminary (M 9-10): nothing to say.
+
+Duration of the game (M 11-14): standard rules. In particular, the
+title of East does not pass after a wash-out.
+
+Selection of seats (M 15): the players are seated in the
+order they connect to the server, or randomly, according to the option 
+given to the server.
+
+The deal etc. (M 16-27): There is no attempt to simulate the usual
+dealing ritual (M 16-20, 23-26); the wall is built randomly by the
+server. The dead wall is also maintained by the server.
+The existence of a dead wall is controlled by the  DeadWall  game
+option; normally there is a dead wall.
+The deal wall is either 14 tiles and kept at 13 or 14 during play (as
+in most authors), or is 16 tiles, not extended during play (per
+Millington (M 22)), according to the  DeadWall16  game option.
+Replacement tiles for kongs are always taken from the loose tiles,
+but replacements for bonus tiles may be drawn from the live wall (M 31),
+or from the loose tiles, according to the  FlowersLoose  game option.
+
+Object of game (M 28-31): all winning hands must comprise four sets
+and a pair, with the exception of the Thirteen Unique Wonders.
+If the  SevenPairs  game option is set, then a hand of any seven
+pairs is also allowed as a winning hand.
+
+Bonus tiles (M 31): M requires that bonus tiles must be declared in
+the turn in which they are drawn; otherwise the player may not
+exchange or score them (and thus they cannot go out). We do not make
+this restriction, as it is (a) pointless (b) unenforceable in real
+life. Bonus tiles may be declared at any time after drawing from the
+wall. (Obviously, there is no reason not to declare them immediately.)
+
+Commencement of the Game (M 32-33): standard.
+
+Playing procedure (M 34-38): standard.
+In particular, the other players have to give permission for
+east to start playing (M 34).
+The display of discards cannot be controlled by the server; the
+current X client displays them in an organized fashion, rather than
+the random layout required by M 35.
+
+Chow (M 39-42): standard.
+
+Pung (M 43-45): standard.
+
+Kongs (M 46-52): M distinguishes three types of kong: concealed,
+claimed (by Kong), and annexed (formed by adding a discard to an
+exposed pung), and allows claimed kongs to be counted as concealed for 
+the purposes of doubling combinations. I have not seen this anywhere
+else; normally, a claimed kong is treated as exposed for all purposes.
+We follow the normal convention; however, the game option
+KongHas3Types can be set to implement M's rules. In this case, the xmj
+program will distinguish claimed kongs by displaying them with the
+last tile face down, whereas annexed kongs are all face up.
+Players may declare a concealed kong, or add to a pung,
+only when they have just drawn a tile from the wall (live or dead);
+not just after a claiming a discard. (A silly restriction in my view,
+but one that all rule sets seem to have (M 51).) As from program
+version 1.11 (protocol version 1110), we also allow a player to add to
+a pung they have just claimed (see note above in the description of play).
+
+Calling and Mah Jong (M 53-54): standard. (I.e. there is no "Calling"
+declaration.)
+
+NOTE: M permits players to change their mind about making a claim 
+(M 69); we do not, and all claims are irrevocable. As a special
+concession, we allow adding to a just claimed pung, so simulating the
+effect of correcting a pung claim to a kong.
+
+Original Call (M 55): the Original Call declaration must be made
+simultaneously with the first discard, rather than afterwards.
+NOTE: the server does *not* check that the declarer does indeed
+have a calling hand, as a mistaken original call does not damage the
+other players or the progress of the game. The server does, however,
+thereafter prevent the declarer from changing their hand; therefore a
+mistaken original call will make it impossible to go out. (Note: in M, 
+an Original Caller may change their hand, but will thereby lose the
+ability to go out (M 55(b)); is this a better way to treat it?)
+Note also: as per M, an original call can be made even if another
+player has claimed a discard before, unlike the Japanese version.
+
+Robbing a Kong (M 57-60): Robbing a kong is implemented. However, as
+with discards, we require that kongs are robbed before anything else
+happens, and in particular before the konger draws a replacement tile.
+Therefore, after a kong, all other players must either claim Mah Jong
+or pass. (The provided programs will pass automatically if robbing is
+not possible.) As for discards, there is a time limit.
+
+Precedence of claims for discard (M 61-65):
+Many rules allow a discard to be claimed up until the time the next
+discard is made. M does this, with elaborate rules for the precise
+specification.
+For ease of implementation, we do not allow this: instead, all players 
+are required to make a claim or pass, and once all players have
+claimed, the successful claim is implemented irrevocably.
+The server imposes a time limit; players that do not claim within
+the limit are deemed to have passed. This defaults to 15 seconds,
+but can be changed or disabled by the  Timeout  game option.
+
+Irregularities in Play (M 66-81): the server does not permit unlawful
+moves, and so no irregularities can arise.
+
+False Declaration of Mah Jong (M 82-83): such declarations are not
+permitted by the server.
+
+False Naming of Discards (M 84-88): this also cannot happen.
+
+Incorrect Hands (M 89): cannot happen.
+
+Letting Off a Cannon (M 90-96): as in M. However, if a player makes
+a dangerous discard, but has no choice, the server will determine
+this; it is not necessary to plead "no choice" explicitly, and neither 
+is the player's hand revealed to the other players.
+
+Wash-Out (M 97-99): standard.
+
+Points of Etiquette (M 100-102): not applicable.
+
+Displaying the Hand (M 103-106):
+The format of display is a matter for the client program, and cannot
+be controlled by the server.
+After Mah Jong, the players are responsible for declaring concealed
+sets in whatever way they wish. The winner, of course, is required to
+declare a complete hand; but the losers may declare as they wish.
+Once a set is declared, it cannot be revoked. Note that the losers may 
+declare multiple scoring pairs.
+
+Procedure in Settlement (M 107-111):
+The settlement is classical: that is, the winner gets the value of
+their hand from all players; the losers pay one another the
+differences between their scores; except all payments to or from East
+are doubled; and if players let off a cannon, they pay everybody's debt.
+Unlike normal play (M 110), all hands are scored by the server, rather 
+than by the players. Settlement is also computed by the server.
+Some variations in settlement are provided: if the LosersSettle game
+option is set to false, there are no payments between losers; if the
+EastDoubles game option is set to false, payments to or from East are
+not doubled; if the DiscDoubles game option is set to true, then the
+discarder of the tile that gave Mah-Jong will pay double to the
+winner, and a self-draw is paid double by everybody.
+
+Method of Scoring (M 112-122):
+The method is standard (M 112), viz calculate points obtained from
+sets and bonuses, and then apply doubles.
+
+The following points are given for tiles:
+
+  Bonus tiles:
+    4 each (M 114(a))
+
+  Pungs:
+    2 for exposed minor tiles; 4 for exposed major or concealed minor;
+    8 for concealed major. (M 114(b))
+
+  Kongs:
+    8 for exposed minor; 16 for exposed major or concealed minor;
+    32 for concealed major. (M 114(c))
+
+  Chows:
+    no score. (M 114(d))
+
+  Pair:
+    2 for a pair of Dragons, Own Wind, or Prevailing Wind.
+    A pair that is both Own and Prevailing Wind scores 4. (M 114(e))
+    Non-winning hands may score more than one pair.
+
+  Basic points:
+    the winner gets 20 points for going Mah Jong.
+    This can be changed by the  MahJongScore  game option 
+    (M 115(a) has 10 points).
+
+  Seven Pairs hand:
+    If Seven Pairs hands are allowed, they receive an additional score of
+    20 points, changed by the  SevenPairsVal  game option.
+
+  Winning from wall:
+    if the final tile is drawn from the wall, 2 points
+    are added (M 115(b)). 
+
+  Filling the only place:
+    if the final tile is the only denomination
+    that could have completed the hand, 2 points are added (M 115(c)).
+    NOTE: As in M, if all four copies of a tile are exposed on the table,
+    it does not count as available for completing the hand.
+
+  Fishing the eyes:
+    a player who completes by obtaining a pair gets 2
+    points if the pair is minor, or 4 if major (M 115(d)).
+    Note: to obtain these points for a discard, the player must actually
+    claim the discard for a pair: e.g. if waiting on 5677, and 7 is
+    discarded, the player must claim for the pair, not the chow.
+
+The following doubles apply to all hands.
+All possible clauses apply unless stated otherwise.
+
+  Having own flower or own season.
+    No extra score. Changed by the  FlowersOwnEach  game option.
+
+  Having own flower AND own season,
+    1 double. (M 116(a)). Changed by the  FlowersOwnBoth  game option.
+
+  Having all four flowers,
+    1 double. (M 116(b)). Changed by the  FlowersBouquet  game option.
+
+  Having all four seasons,
+    1 double. (M 116(b)). Changed by the  FlowersBouquet  game option.
+    
+
+  Each set of dragons,
+    1 double. (M 116(d))
+
+  A set of the player's own wind,
+    1 double. (M 116(e))
+
+  A set of the prevailing wind,
+    1 double. (M 116(f))
+
+  "Little Three Dragons": two sets and a pair of dragons.
+    1 double. (M 116(g))
+
+  "Big Three Dragons": three sets of dragons.
+    2 doubles. (M 116(h))
+
+  "Little Four Winds": three sets and a pair of winds.
+    1 double. (M 116(i))
+
+  "Big Four Winds": four sets of winds.
+    2 doubles. (M 116(j))
+    
+    (Note: the definitions of these last four doubles when applied to
+    non-winning hands are subject to wide variations. Possibly there
+    should be options to allow other possibilities.)
+
+  Three concealed pungs:
+    1 double. (M 116(k))
+    (Note: if the KongHas3Types game option is set, a claimed kong counts
+    as concealed for this hand; see the note above under "Kongs".)
+
+The following doubles apply to the winning hand only:
+
+  No score hand: four chows and a non-scoring pair.
+    1 double. (M 117(a))
+    (Note: like M, we allow any of the extra points (Fishing the Eyes,
+    etc) to go with this double. Some rules say that the extra points
+    invalidate this hand. Possibly there should be an option for this.)
+
+  No chows:
+    1 double. (M 117(b))
+
+  Concealed hand:
+    1 double (M 117(c)), changeable with the  ConcealedFully  game
+    option. (Note: this means a hand that is fully concealed after going
+    out. Another common value for this is 3 doubles, in which case 1
+    double is usually given for a semi-concealed hand (see below).)
+    (Note: if the KongHas3Types game option is set, a claimed kong counts
+    as concealed for this hand; see the note above under "Kongs".)
+
+The following doubles normally apply to the winning hand only;
+however, the  LosersPurity  game option can be set to allow
+losing hands to score them (this is a highly deprecated American
+feature, but has been requested by a user).
+
+  Semi-concealed hand:
+    no doubles, changeable with the  ConcealedAlmost  game
+    option. (Not in M)
+    (Note: this means a winning hand that is concealed up to the point of
+    going out, or, if enabled, a concealed losing hand. According to a
+    discussion on rec.games.mahjong, a winning semi-concealed hand is
+    classically awarded one double (with three given for fully concealed).
+    One book in my possession (U.S.A., early 1920s) awards this double
+    only to a hand that is concealed except for the pair.)
+    (Note: if the KongHas3Types game option is set, a claimed kong counts
+    as concealed for this hand; see the note above under "Kongs".)
+
+  One suit with honours:
+    1 double. (M 117(d))
+
+  One suit only:
+    3 doubles. (M 117(e))
+
+  All majors:
+    1 double. (M 117(f))
+
+  All honours (in an unlimited game):
+    2 doubles. (M 117(g)) 
+    (Note: such a hand will also score the double for all majors.)
+
+  All terminals (in an unlimited game):
+    2 doubles. (Not in M)
+    (Note: such a hand will also score the double for all majors.)
+
+The following doubles apply only to the winning hand:
+
+  Winning with loose tile:
+    1 double. (M 117(h))
+    (Note: with the default settings, replacements for bonus tiles come from
+    the live wall. Hence this double applies only to winning after Kong.)
+
+  Winning from the bottom of the sea (winning with last tile),
+    1 double. (M 117(i))
+
+  Catching a fish from the bottom of the sea (winning with last discard),
+    1 double. (M 117(j))
+
+  Robbing a kong,
+    1 double. (M 117(k))
+
+  Completing Original Call,
+    1 double. (M 117(l))
+
+Limit (M 118-120): the limit is 1000 by default, and can be changed by 
+the  ScoreLimit  game option. The  NoLimit  game option can be 
+used to play a game "with the roof off".
+
+
+The following hands are limit hands:
+
+  Heaven's Blessing: East wins with dealt hand. (M 122(a))
+
+  Earth's Blessing: player wins with East's first discard. (M 122(b))
+
+  Gathering Plum Blossom from the Roof: winning with 5 Circles from the
+    loose wall. (M 122(c))
+
+  Catching the Moon from the Bottom of the Sea: winning with 1 Circle as 
+    the last tile. (M 122(d))
+    (Note: M says that the tile must be drawn. It seems more reasonable
+    also to allow it to be the last discard, which is what we
+    do. Objections?)
+
+  Scratching a Carrying Pole: robbing a kong of 2 Bamboos. (M 122(e))
+
+  (Note: these last three limits are rather arbitrary, but of the
+    arbitrary limits they are apparently the most common. There should be
+    options to disable them.)
+
+  Kong upon Kong: making a Kong, making another Kong with the loose
+    tile, and with the second loose tile obtaining Mah Jong. (Also, of
+    course, with three or four successive kongs.) (M 122(f))
+
+  Four Kongs. (M 122(g))
+
+  Buried Treasure: all concealed and no chows. (M 122(h))
+
+  The Three Great Scholars: three sets of dragons and no chows. (M 122(i))
+    (Note: in most rules I have seen, there is no restriction to a no chow 
+    hand. Since in M's rules, three sets and a chow scores at least
+    (10 (M has 10 for Mah Jong) + 12 (at least 3 pungs))
+    times 8 (2 for each set of dragons) times 4 (for Big Three Dragons)
+    = 704, this is significant with the default limit. For us, with 20 for
+    going out, Big Three Dragons is over the default limit anyway.)
+
+  Four Blessings o'er the Door: four sets of winds and a pair. (M 122(j))
+
+  All Honours. (M 122(k))
+
+  Heads and Tails: all terminals. (M 122(l))
+
+  Imperial Jade: contains only Green Dragon and 2,3,4,6,8 Bamboo. (M 122(m))
+    (Note: another rather arbitrary hand, but widely adopted.)
+
+  Nine Gates: calling on 1-1-1-2-3-4-5-6-7-8-9-9-9 of one suit. (M 122(n)).
+
+  Wriggling Snake: 1-1-1-2-3-4-5-6-7-8-9-9-9 plus 2, 5 or 8 of 
+    one suit (M 122(o)).
+    (Note: another rather arbitrary hand.)
+
+  Concealed Clear Suit: one suit only and all concealed. (M 122(p))
+
+  Thirteen Unique Wonders: one of each major tile, and a match to any of 
+    them. (M 122(q))
+
+  East's 13th consecutive Mah-Jong. (M 122(r))
+
+
+General note: there are many other doubles and limits kicking
+around. I welcome opinions on which should be possible options; and
+also on which of the above I should eject from the default set.
+I dislike Imperial Jade, Wriggling Snake, and the ones depending on a
+specific tile (Gathering Plum Blossom, Catching the Moon, Scratching a 
+Carrying Pole): which of these are so commonly adopted that they
+should be in even a fairly minimalist default set?
+
+
+GAME OPTIONS
+------------
+
+This section describes the options that can be set in the
+game. Whether an option can be used, depends on the version of the
+programs. This is described by a "protocol version number"; this is
+not strictly speaking a version just of the communication protocol,
+but a version number reflecting the combination of protocol and
+programs. When playing by oneself, this does not matter, but in the
+case of a networked game, players might have different versions of the 
+software, in which case the game is played according to the lowest
+version of any player.
+
+Game options can be controlled in two ways: the  --option-file 
+argument to the  mj-server  program gives options to be applied to 
+the game, or options can be set by the players, using the interface
+described in the manual section for  xmj .
+
+In the user interface, the options are referred to by a one line
+description, but each option also has a short name, given here.
+
+Options are of several types:
+
+  bool 
+    boolean, or on/off, options.
+
+  int 
+    integer options
+
+  nat 
+    non-negative integer options
+
+  string 
+    is a miscellaneous type, whose values are strings of at most 127
+    characters which must not contain white space
+
+  score 
+    is the type used for options that give the score of some combination
+    or feature in a hand. A score is either a limit (or a half-limit; the
+    underlying protocol supports percentages of limits, but the current
+    user programs only support limits and half limits); or a number of
+    doubles to be awarded; or a number of points to be added. It is
+    possible (though never needed) to have both points and doubles. If
+    points/doubles are specified as well as a limit, they will be used in
+    a no-limit game. (The server implements a hard limit of 100000000
+    on all scores to avoid arithmetic overflow, but that's unlikely to
+    worry anybody.)
+    
+Currently supported options
+---------------------------
+
+The following options are implemented in the versions of the program
+with which this document is distributed. If playing against people
+with older versions of the software, some options may not be
+available. The list gives for each option the short name, type, and
+short description, followed by a detailed explanation.
+
+  Timeout  ( nat ) time limit for claims
+    This is the time in seconds allowed to claim a discard, or to rob a
+    kong. If set to zero, there is no timeout. The default is 15 seconds.
+    
+  TimeoutGrace  ( nat ) grace period when clients handle timeouts
+    This period (in seconds) is added to the Timeout above before the
+    server actually forces a timeout. This is for when clients handle
+    timeouts locally, and allows for network lags. If this option is zero,
+    clients are not permitted to handle timeouts locally. The current
+    server also only allows players to handle timeouts locally if all of
+    them wish to do so.
+    
+  ScoreLimit  ( nat ) limit on hand score
+    This is the limit for the score of a hand. In a no-limit game, it is
+    the notional value of a "limit" hand. The default is 1000.
+    
+  NoLimit  ( bool ) no-limit game
+    If this option is set, the game has no limit on hand scores. The
+    default is unset.
+    
+  MahJongScore  ( score ) base score for going out
+    This is the number of points for obtaining Mah-Jong. 
+    The default is 20.
+    
+  SevenPairs  ( bool ) seven pairs hand allowed
+    If this option is set, then Mah-Jong hands of seven pairs (any seven
+    pairs) are allowed. The default is unset.
+    
+  SevenPairsVal  ( score ) score for a seven pair hand
+    This gives the score (in addition to the base Mah-Jong score) for a
+    seven pairs hand. The default is 20.
+    
+  Flowers  ( bool ) play using flowers and seasons
+    If this option is set, the deal includes four flowers and four seasons 
+    in the Chinese Classical style. If unset, only the 136 standard tiles
+    are used. The default is set.
+    
+  FlowersLoose  ( bool ) flowers replaced by loose tiles
+    If playing with flowers, this option determines whether flowers and
+    seasons are replaced from the live wall (unset), or by loose tiles
+    (set). The default is unset.
+    
+  FlowersOwnEach  ( score ) score for each own flower or season
+    This option gives the score for having one's own flower or season.
+    If one has both, this score will be given twice. The default is no
+    score.
+    
+  FlowersOwnBoth  ( score ) score for own flower and own season
+    This is the score for having both one's own flower and one's own
+    season. Note that this is awarded in addition to twice the previous
+    score. The default is 1 double.
+    
+  FlowersBouquet  ( score ) score for all four flowers or all four seasons
+    This is the score for having all four flowers or all four seasons.
+    The default is 1 double.
+    
+  DeadWall  ( bool ) there is a dead wall
+    This determines whether there is a dead wall, so that play ends when
+    it is reached (set), or whether all tiles may be drawn (unset).
+    The default is set.
+    
+  DeadWall16  ( bool ) dead wall is 16 tiles, unreplenished
+    If this option is set, then the dead wall initially has 16 tiles,
+    and does not have any more tiles added to it (this is the set-up
+    described by Millington). If the option is unset, then the dead wall
+    initially  has 14 tiles, and after two loose tiles have been taken,
+    two tiles are moved from the live wall to the dead wall (this is the
+    set-up described by almost everyone else). The default is unset in
+    versions 1.1 onwards, and set previously. (To be precise, the protocol 
+    level default is set, but all servers from 1.1 onwards will change
+    this to unset.)
+    
+  ConcealedFully  ( score ) score for fully concealed hand
+    This is the score for a winning hand with no open sets.
+    The default is 1 double.
+    
+  ConcealedAlmost  ( score ) score for almost concealed hand
+    This is the score for a hand that is concealed up to the point of
+    going out.
+    The default is no additional score.
+    
+  LosersPurity  ( bool ) losing hands score doubles for pure, concealed etc.
+    If this option is set, losing hands will score various doubles for one
+    suit, almost concealed, etc. See the rules for details. This option is
+    an (Anglo-)Americanism alien to Chinese Classical (see Foster for a
+    spirited but faulty argument in its favour, and Millington for the rejoinder).
+    The default is unset.
+    
+  KongHas3Types  ( bool ) claimed kongs count as concealed for doubling
+    If this option is set, claimed kongs count as concealed for various
+    doubling combinations, although they score as exposed for basic
+    points. See the note above under "Kongs".
+    The default is unset.
+    
+  LosersSettle  ( bool ) losers pay each other
+    If this option is set, the losers pay each other the difference
+    between their scores. If it unset, they pay only the winner.
+    The default is set.
+    
+  EastDoubles  ( bool ) east pays and receives double
+    If this option is set, payments to and from East Wind are doubled,
+    as in the Chinese Classical game.
+    The default is set.
+    
+  DiscDoubles  ( bool ) the discarder pays double
+    If this option is set, the settlement procedure is changed to a style
+    common in Singapore. That is, if the winning player wins off a
+    discard, the discarder pays double the hand value, and the other
+    players pay the hand value. If the winner wins from the wall, then all
+    other players pay double the hand value.
+    The default is unset.
+    Note: EastDoubles and DiscDoubles can be set together, but nobody
+    plays such a rule.
+    
+  ShowOnWashout  ( bool ) reveal tiles on washout
+    If this option is set, the players' hands will be revealed in the 
+    event of a washout.
+    
+  NumRounds  ( nat ) number of rounds to play
+    This option says how many rounds to play in the game. For aesthetic
+    reasons, the possible values are 1, 2, or a multiple of 4. In the 2
+    round case, the East and South rounds will be played. It defaults to
+    the usual 4 rounds.
+    
+Option file format
+------------------
+
+Both in the option file and in the  .xmjrc  file, options are
+recorded in the format used by the server protocol. This is a line of
+the form
+
+GameOption 0  NAME TYPE MINPROT ENABLED VALUE DESC
+
+The meanings of the elements are:
+
+  GameOption  0
+    identifies this as a game option line (the 0 is an irrelevant field
+    from the protocol).
+
+  NAME
+    is the name of the option.
+
+  TYPE
+    is the type of the option.
+
+  MINPROT
+    is the minimum protocol version with which the option can be used
+    (which is not necessarily the version at which it was introduced).
+
+  ENABLED
+    will always be 1.
+
+  VALUE
+    is the value: a decimal (signed) integer for  nat  and  int ;
+    0 or 1 for  bool ; the string for  string ; and for
+    score , if the score is C centi-limits, D doubles and 
+    P points, the value is C*1000000 + D*10000 + P.
+
+  DESC
+    is a short description of the option, which is not required but is
+    usually copied in from the server.

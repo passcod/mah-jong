@@ -1,0 +1,59 @@
+gtk-theme-name = "Clearlooks"
+
+gtk-font-name = "Verdana Condensed 12px" 
+ 
+style "table" { 
+	bg[NORMAL] = "darkgreen" 
+} 
+ 
+
+style "playerlabel" {
+       fg[NORMAL] = "white"
+}
+
+style "tile" { 
+	bg[NORMAL] = "white" 
+	xthickness = 0 
+ 	ythickness = 0 
+} 
+ 
+style "mytile" { 
+	bg[NORMAL] = "white" 
+	bg[PRELIGHT] = "yellow" 
+	bg[ACTIVE] = "#444" 
+	xthickness = 0 
+ 	ythickness = 0 
+} 
+ 
+style "claim" { 
+	bg[NORMAL] = "yellow" 
+	font_name = "Sans Bold 20px" 
+} 
+ 
+binding "topwindow" { 
+	bind "Left" { 
+		"selectleft"() 
+	} 
+	bind "Right" { 
+		"selectright"() 
+	} 
+	bind "<shift>Left" {
+		"moveleft"()
+	}
+	bind "<shift>Right" {
+		"moveright"()
+	}
+} 
+ 
+style "text" { 
+	font_name = "Courier New 16px" 
+} 
+
+widget "*.table" style "table" 
+widget "*.tile" style "tile" 
+widget "*.mytile" style "mytile" 
+widget "*.claim" style "claim" 
+widget "topwindow" binding "topwindow" 
+widget "*.GtkTextView*" style "text" 
+widget "*.GtkEntry*" style "text" 
+widget "*.playerlabel" style "playerlabel"

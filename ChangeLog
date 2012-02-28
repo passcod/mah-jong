@@ -1,0 +1,2950 @@
+2012-02-02  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: better fix for time_t ?
+
+2012-02-01  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c, gui-dial.c, proto-encode-msg.pl, sysdep.h, sysdep.c:
+	make 64-bit clean
+
+	* protocol.h, gui.c, gui-dial.c, game.h, game.c, controller.c, scoring.c, greedy.c:
+	Use GameOptionValue (union type) instead of punning all the possible
+	types.
+
+2011-12-25  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* xmj.man: remove accidentally pasted in url
+
+2011-11-27  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* xmj.man, gui.h, gui-dial.c, gui.c:
+	Save open dialog robot player options in rc file.
+
+2011-11-26  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* controller.c:
+	fix stupid bug in id-order-seats setup causing seg fault.
+
+2011-11-22  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c, xmj.man:
+	Use /tmp/mj-$$ if Unix socket selected in dialog without specifying
+	filename.
+
+2011-08-29  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c:
+	revert the iconification fix for gtk1 builds where it doesn't work
+
+	* ChangeLog, CHANGES: 1.11
+
+2011-08-28  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: do the previous fix properly
+
+	* game.c: Allow a just claimed pung to be converted to a kong.
+
+	* xmj.man: more on adding to just claimed pungs
+
+	* xmj.man: a few tidies, and the new add-to-pung ruling
+
+2011-08-27  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* protocol.h: bump to 1110 for fixing addtopung after claiming
+
+2011-08-26  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: fix about xmj (nmenu_items error).
+
+2010-12-19  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: Finally fix the iconification of subsidiary windows.
+
+2010-12-18  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c:
+	status_update: always do it, as now status also appears in main
+	window.
+
+2009-07-10  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* ChangeLog: really really really 1.10 ?
+
+	* sysdep.c: maybe shut up warning in long long constant?
+
+	* gui.c: only create the player labels if they're going to be used.
+
+	* gui.c:
+	try another technique to force notebook pages to tell their size
+	correctly
+
+	* Makefile.in: forgot -mwindows flag in gtk2
+
+2009-07-09  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* CHANGES: really really 1.10?
+
+	* ChangeLog: really really 1.10 ?
+
+	* gui.c: adjust size request for textpages
+
+	* gui.c:
+	On windows, allow for EAGAIN errors in the glib io reader routine.
+
+2009-07-05  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* make-release: for final release
+
+	* make-release: include gtk2 dlls etc. in win32 gtk2 releases.
+
+	* CHANGES: 1.10
+
+	* ChangeLog: really 1.10
+
+	* gtkrc.h: use basic fonts only for windows
+
+	* gui.c:
+	add some stuff for windows clearlooks, which however doesn't yet work.
+
+	* Makefile.in: give Windows with and without msys versions
+	(since installing msys broke my non-msys setup)
+
+	* gtkrc-clearlooks: add theme-name
+
+2009-07-03  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* makedep: for last release
+
+2009-06-28  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* version.h.in, vlazyfixed.c, vlazyfixed.h, xmj.man, mprotocol.c, mprotocol.h, mutate, player.c, player.h, pmon, proto-decode-msg.pl, proto-encode-msg.pl, protocol.c, protocol.h, runtest, scorenew, scoring.c, scoring.h, stats, sysdep.c, sysdep.h, tiles.c, tiles.h, MANIFEST, README, client.c, client.h, controller.c, controller.h, cull, ga.c, game.c, game.h, greedy.c, gtkrc-minimal, gtkrc-plain, gui-dial.c, gui.h, iconres.rs, lazyfixed.c, lazyfixed.h, logstats, make-enums.pl, make-release, makefallbacktiles, makefile.msvc.old, maketxt, malloc.c, manager.c, mj-player.man, mj-server.man, CHANGES, FILES-binary, FILES-src, LICENCE:
+	new major version for final release
+
+	* CHANGES: 1.10
+
+	* ChangeLog: changes up to 1.10
+
+	* README: bring it up to date
+
+	* gui.c: gtk1ify new code
+
+	* gui.c: warnings tidy
+
+	* make-release:
+	give the windows special treatmnet for any suffix starting win32-i386
+
+	* xmj.man: add --id-order-seats
+
+	* gui.c: start server with --id-order-seats
+
+	* controller.c: add --id-order-seats
+
+	* greedy.c: undocument -> strategy
+
+	* xmj.man: documen the strategy options
+
+	* gui-dial.c, gui.c:
+	arrange for scoring info window to popup with natural size
+
+	* xmj.man, gui.c: drag and drop rearrangement of tiles implemented.
+
+	* gui.c: fix old stupid bug in calling conc_callback,
+	while developing drag and drop
+
+2009-06-27  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* xmj.man: moving tile, different accels on windoze
+
+	* gtkrc.h: typo
+
+	* gui.c: add l,r accelerator keys for Windows gtk1
+
+	* gtkrc-clearlooks, gtkrc-plain, gtkrc-minimal, gtkrc.h, gui.c:
+	Add the Shift-Left and Shift-Right keys to move selected tile
+
+	* xmj.man, gui-dial.c, gui.c, gui.h: add the SortTiles display option
+
+	* player.c, player.h:
+	add player_reorder_tiles and player_set_discard_hint
+
+2009-06-26  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* makedep: check for gcc 4 etc.
+
+	* Makefile.in: tidy Gtk
+
+	* controller.c: bug in state loading of completed rounds
+
+	* gui-dial.c, gui.c: Warnings tidy.
+
+	* controller.c:
+	don't exit on end of game, wait for first client disconnect.
+
+	* gui.h, gui.c, gui-dial.c: improve end of game handling
+
+2009-06-25  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gtkrc.h: add playerlabel styles
+
+	* controller.h, protocol.h: add NumRounds option
+	pversion 1011.
+
+	* game.c, controller.c, xmj.man: add NumRounds option
+
+2009-06-23  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* FILES-binary, FILES-src: add the gtkrc-* files
+
+	* controller.c:
+	send the GameOver message at the end of score_hand, instead of
+	waiting until the next hand is started.
+
+	* xmj.man: document playerlabel
+
+	* gui.c:
+	setting label ellipsis breaks rotated text. Don't justify in board
+	labels for left and right players.
+
+	* gui.c:
+	old stupid bug: not handling spaces in player name for open dialog
+
+	* gui.h, gui-dial.c, gui.c:
+	implement the player status in the spare corners
+
+	* gtkrc-minimal, gtkrc-plain, gtkrc-clearlooks: add playerlabel
+
+2009-06-22  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: attempt to make dialogs take focus, but without success.
+	Fix repeated coding.
+
+	* gui.c:
+	finally, we expand the left and right players to have the right size.
+
+	* gtkrc-clearlooks, gtkrc-plain, gtkrc-minimal: New file.
+
+	* xmj.man: document gtk2 settings.
+
+	* gui.c: fix gtk1 breakages introduced by gtk2 changes
+
+	* gui-dial.c, gui.c, gtkrc.h: simplify the styling
+
+2009-06-21  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: read gtk1 color names
+
+	* gui.h, gui.c, gui-dial.c: implement use_system_gtkrc
+
+	* gui.c, gui-dial.c, gui.h: put gtk2rcfile in display options dialog
+
+	* gui.c: tidy gtk2-rcfile a bit
+
+	* gui.h: gtk2_rcfile
+
+	* gtkrc.h: oops. \n was n in default
+
+2009-06-20  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: save posn of display dialog on close
+
+	* gtkrc.h: restructure, add default, remove the clearlooks copy
+
+	* gui.c, gui-dial.c:
+	fix the gtk2 style setting to use a default or clearlooks
+
+	* gui.c: fix the tile size discovery
+
+	* gui.c: add --gtk2rcfile option
+
+	* gtkrc.h: tweaks - enforce default style
+
+2009-06-19  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c, gui-dial.c:
+	allow the iconify code on windows. It doesn't work, but there's
+	no harm having it there, in case it ever does work.
+
+	* Makefile.in: fixes for windows
+
+2009-06-18  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: oops. don't iconify non-windows
+
+	* README: update for 1.10 situation.
+
+	* FILES-src, MANIFEST: add gtkrc.h
+
+	* Makefile.in: switch to gtk2
+
+	* gtkrc.h: New file.
+
+	* gui.c, gui-dial.c: handle font and colour setting
+
+	* gui-dial.c: remove more warnings
+
+	* gui.c: clean up more warnings
+
+	* gui-dial.c: remove warnings
+
+	* gui.c: eliminate warnings.
+
+	* gui.c: fix iconification
+
+	* controller.c: fix bug causing segfault when player connects twice.
+
+2009-06-17  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: gtk2 fixes for dialog windows not keeping their position
+
+	* gui.c: use compiled in gtkrc
+
+	* gui.c: fix animation. Check that it still works in gtk1, since we
+	fixed a silly problem that maybe we wrongly hacked around before?
+	(Had boardframe inside boardfixed instead of vice versa, so
+	coordinates of windows didn't match in gtk2.)
+
+2009-06-16  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: fixes to GTK2 problems with the warning window
+
+	* gui-dial.c: set word wrap in notebook
+
+	* gui-dial.c: remove cursors
+
+2009-06-15  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c:
+	more accelerator fixes (disable when focus is in chat window)
+
+2009-06-14  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c, gui.c: more messagetext fixes
+
+	* gui.c, gui-dial.c: basic fix for messagetext
+
+	* gui.c, gui-dial.c: fix the scoring notebook
+
+	* gui-dial.c: fix up accelerator problems
+
+	* gui-dial.c:
+	get dialog positioning right for gtk2 (for central; now try it with
+	the other position settings).
+
+	* gui.c: finally sorted out the key-binding mess.
+
+	* gui.c: checkpoint again. Highlighting of discarded tiles now ok.
+
+2009-06-13  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: checkpoint - basics working
+
+2009-06-11  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c, gui.c, Makefile.in: patch from Barry deFreese for gtk2
+
+2008-08-24  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: remove debugging statement accidentally left in.
+
+2008-08-22  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* sysdep.h, sysdep.c: add index() in windows
+
+	* xmj.man: document authorization options in 1.9
+
+	* CHANGES: 1.9
+
+	* Makefile.in: use native Windows del rather than cygwin rm
+
+	* gui-dial.c:
+	cast to suppress warnings introduced by fixing gtk headers.
+
+	* greedy.c: (don't) handle Redirect; suppress a warning.
+
+	* controller.c: handle more new messages in 1100.
+
+	* game.c: complain if unexpected Redirect and AuthReqd cmsgs.
+
+	* gui.h: change to params for redirect handling
+
+	* gui.c: handle Redirect and AuthReqd
+
+	* protocol.h: add PMsgNewAuthInfo while we're doing it.
+
+2008-08-21  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* greedy.c: allow basic authorization on command line (--password).
+
+	* protocol.h, controller.c, gui-dial.c:
+	Change basic authorization type name to "basic" from "password".
+
+	* sysdep.h, sysdep.c:
+	Add qstrmcat function for quoting strings for the shell.
+
+	* gui.c: Quote player names when passing to shell
+
+2007-11-12  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* protocol.h: Implemented basic authorization
+	pversion to 1100.
+
+	* gui.h, gui.c, gui-dial.c, controller.c:
+	Implemented basic authorization
+
+2007-06-06  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* xmj.man, controller.c: add --hand-history option.
+
+2007-05-22  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* xmj.man: ShowOnWashout
+
+	* stats: add inc line
+
+	* scorenew: mj-player not ga
+
+	* mutate: checkpoint
+
+	* logstats: add inc line
+
+	* cull: take first arg
+
+	* CHANGES, ChangeLog: 1.8
+
+	* client.c, client.h: client_find_set: return pairs before chows
+
+	* xmj.man, gui-dial.c:
+	change the Discard label in the turn dialogue to Declare when
+	it's a flower.
+
+	* gui-dial.c, xmj.man:
+	Remove the Add To Pung button in the turn dialogue, and
+	move its functionality into the Kong button.
+
+	* protocol.h: Add ShowOnWashout (request from Ulrich Schwartz)
+	pversion 1072
+
+	* game.c, controller.c:
+	Add ShowOnWashout (request from Ulrich Schwartz)
+
+2006-12-16  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* greedy.c: remove one magic value
+
+2006-02-14  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* runtest: Why was I putting the pid in /tmp/mj. even when not usepid?
+
+	* README: remove dcs web page and email
+
+2006-02-12  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* greedy.c:
+	amalgamate magic and magic2. Try fiddling with adding scores
+	for different branches.
+
+2006-02-01  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* greedy.c:
+	send eval debugging output to debugf, which is currently stderr
+
+	* greedy.c: move some other magic numbers into magic2 and have --magic2
+	option.
+
+2006-01-31  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* pmon: pass any additional args to the player
+
+2006-01-30  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* pmon: put in the pause until oked by user (x  to skip)
+
+	* pmon: remove sleep
+
+	* gui.c:
+	Re-Implement echo-server via put_line, so that raw protocol comes out.
+
+	* pmon: New file.
+
+	* gui.c: create the open dialog in create_display. Not sure why it was
+	separately in the main routine.
+
+	* gui.c: monitor fixes
+
+2006-01-29  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: don't send connect in monitor mode
+
+2006-01-28  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* xmj.man: add --monitor option for xmj
+
+	* gui.h, gui-dial.c, gui.c: add --monitor option
+
+	* greedy.c:
+	move some magic numbers into an array settable via parameter file,
+	and change the defaults to the results of a long random search
+
+2006-01-26  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* runtest: temp changes for ga use
+
+	* Makefile.in: add a pattern rule for variants of greedy-FOO
+
+	* ga.c: well, this didn't work particularly. We'll keep it here for
+	the record
+
+	* cull, mutate, scorenew: New file.
+
+2006-01-24  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* ga.c: New file.
+
+	* Makefile.in: add ga target
+
+	* sysdep.c: tcp_keepidle doesn't work on unix sockets (duh!)
+
+2006-01-22  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* sysdep.c: Windoze uses SD_SEND instead of SHUT_WR
+
+	* CHANGES: Release 1.7
+
+	* ChangeLog: 1.7
+
+	* sysdep.c, sysdep.h: make put_data send eof if passed zero data;
+	add get_data.
+
+	* gui-dial.c: pop up message returned from crash report server, if any.
+
+2006-01-18  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* sysdep.c, malloc.c, client.c, gui-dial.c, gui.c:
+	More warning suppressions (mostly on Windows)
+
+	* Makefile.in: control cc warning options with a Warnings make variable
+
+	* sysdep.c: use TCP_KEEPIDLE only if it's defined as a constant
+
+	* gui.c: small tweaks to remove type-related warnings
+
+	* sysdep.c, sysdep.h:
+	add some const to log_error to suppress warnings (and because they
+	should be const)
+
+2006-01-17  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* README: updating for 1.7 and new gtkdlls1.zip (also removed some
+	obsolete sentences).
+
+	* Makefile.in: changes for my new Windows compilation setup
+
+2006-01-14  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* sysdep.c: set keepalive on outgoing connections
+
+	* greedy.c: handle Reconnect
+
+	* controller.c: Changes to support Reconnect.
+
+	* gui.c: Changes to support Reconnect.
+	(Not yet on interface.)
+
+	* gui.h: Changes to support Reconnect
+
+	* client.h: additional routines to support Reconnect
+
+	* protocol.h: change semantics for reconnect
+
+	* client.c: additional routines to support Reconnect
+
+2006-01-13  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* game.c: Fix very old stupid bug: closed kongs weren't being counted
+	when checking for Kong upon Kong.
+
+2006-01-09  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* game.c: handle reconnect (by doing nothing)
+
+	* protocol.h: Add Reconnect and RequestReconnect. pversion to 1070.
+
+2005-04-17  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* controller.c:
+	Reject multiple connects from same connection (thanks to Len Budney)
+
+2005-03-22  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* sysdep.c, scoring.c, gui.c, controller.c:
+	buffer overflow precautions from Len Budney
+
+	* sysdep.h: add strmcat
+
+	* gui-dial.c: increase saved-warning buffer size
+
+2005-02-28  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: Oops. In introducing a GTK2 version of some code, deleted
+	the 1.2 version by accident.
+
+2005-02-05  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* MANIFEST, FILES-src: add malloc.c
+
+	* Makefile.in: Use Doug Lea's malloc for Windows
+
+	* malloc.c: hack it around to get it to compile in my environment -
+	mostly remove mmap, and add unistd back
+
+	* malloc.c: *** empty log message ***
+
+	* Makefile.in: add warning not to use gtk+2
+
+2004-08-26  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: more gkt2ery
+
+	* gui-dial.c: suppress const warning
+
+	* greedy.c: only rob closed kong if can get thirteen wonders
+
+2004-08-22  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c, gui.c:
+	Started porting for GTK2. Just got to compilation, but still
+	far to go.
+
+	* Makefile.in: added GTK2 flags
+
+2004-08-09  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: protect against null messages
+
+2004-08-08  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: fix display bug when robbing kong.
+
+	* controller.c:
+	Fix bug in game resumption: need to pass options to players
+	before they get a NewHand message.
+
+2004-08-05  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: protect against nulls in state recording;
+	warn on bad messages from controller
+
+2004-08-03  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: fix bug in last addition
+
+	* gui.c: hopefully change reporting hook to send everything
+
+	* gui.c: add databuffer struct and record server history in it
+
+2004-07-29  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: put version in error reports
+
+	* gui.c: hmm. Check for error in handle_cmsg and report it.
+
+2004-07-07  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* make-release: no longer make a static linux version
+
+	* gui-dial.c: shunt report filing out to a sysdep routine.
+
+	* sysdep.h: *** empty log message ***
+
+	* sysdep.c:
+	Add some routines for dealing with sockets as-is, without applying
+	the transforms.
+
+2004-07-05  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c:
+	don't file reports before the windows are up (since can't ask
+	for permission)
+
+	* sysdep.c: declaration in wrong place
+
+	* gui-dial.c, gui.h, gui.c:
+	Add facility for Internet debug reports, with appropriate
+	preference options and querying.
+
+2004-06-24  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: buffer safety in log_msg_dump_state
+
+	* game.c, game.h:
+	change game_print_state to pass back number of spare bytes in buffer.
+
+2004-06-22  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: nag at intervals of not less than one month.
+
+2004-06-10  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: display of RobsKong should then fall through and do MahJongs
+	processing
+
+	* ChangeLog: delete duplicate entry
+
+2004-06-04  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui-dial.c: don't try to pop up error if no window system yet
+
+	* gui-dial.c: Arrgh. Must use "send" to write to sockets in windoze
+
+2004-05-21  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* sysdep.h, sysdep.c:
+	Add source code ident into the error function - actual function
+	is now log_error.
+
+2004-05-15  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* player.c: replace assertion by error call.
+
+	* gui.c:
+	1. Add debugging to cmsg processing - where errors occur in some
+	players.
+	2. Switch on nagging for Windows! Why didn't I go this before!
+
+	* gui-dial.c: warn rather than popup when can't file report.
+	Pop up error dialog to tell user when error occurs.
+
+2004-05-14  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* gui.c: dump on errors, not warning
+
+	* gui-dial.c, gui.c: dump game state on errors and file report
+
+	* sysdep.c: oops...don't copy null note.
+
+	* game.c: handle null game in print_state
+
+	* game.c: add players to game state printout
+
+2004-05-10  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* sysdep.h, sysdep.c: Add log_msg_add_note_hook
+
+2004-05-09  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* player.c:
+	player_discard functions were not clearing the NoDiscard flag
+	of hidden players.
+
+	* CHANGES: 1.6.3
+
+	* player.c: Fix the bug pointed out by Nicolas in thirteen wonders
+
+	* player.h, player.c: Add player_print_state()
+
+	* game.c: move nullprotect into sysdep
+
+	* sysdep.h, sysdep.c: Add the nullprotect utility function.
+
+	* gui.c, gui-dial.c:
+	initialize some variables to avoid (hopefully inapplicable) warnings.
+
+	* sysdep.h, sysdep.c: add error level to log functions
+
+	* sysdep.h: remove superfluous declarations of (v)snprintf
+
+	* player.c: another error in thirteen wonders, introduced last time.
+
+2004-05-08  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* game.c: fix typos in game_print_state; remove unused variable.
+
+	* game.c: *** empty log message ***
+
+	* controller.c: use seats instead of unsigned int for seats variables,
+	since we've changed from unsigned to signed, and should have
+	been doing it anyway.
+
+	* game.c: Add game_print_state, in basic form (doesn't print players or
+	options).
+
+	* tiles.h: Curiously, we never included the tiles-enum functions!
+
+	* game.h: change noseat from a #define to an enum constant.
+	Add game_print_state as debugging function.
+
+	* tiles.c: Curiously, we never included the tiles-enum functions!
+
+2004-05-03  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* protocol.c: typo in warning message (said pmsg, meant cmsg)
+
+2004-04-16  Julian Bradfield  <jcb@inf.ed.ac.uk>
+
+	* xmj.man: remove ref to dcs web site
+
+	* CHANGES, ChangeLog: 1.6.2
+
+	* sysdep.c, sysdep.h:
+	(v)snprintf does exist in Windows, it's just missing from mingw
+	headers. So use it.
+
+2004-04-14  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c:
+	tilesetbox_set: should not refer to the .tile value of an empty
+	tileset.
+
+2004-04-10  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* CHANGES, ChangeLog: 1.6.1
+
+	* player.c:
+	Since time immemorial, the thirteen wonders checking function has
+	been wrong, in that it didn't actually check for the pair!
+
+	* controller.c:
+	Server was still setting up player with blank name, causing segfault.
+
+2003-10-12  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in: Oops...don't install table manager when not built!
+
+2003-10-08  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* sysdep.c: fake (v)snprintf for Windoze.
+
+2003-10-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog: really 1.6
+
+	* sysdep.h: fake (v)snprintf for Windoze.
+
+	* CHANGES, ChangeLog: 1.6
+
+
+2003-10-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* protocol.h:
+	pversion to 1060, to mark changes in backslash processing.
+	Really, these should be bug fixes, but the protocol was unclear
+	before.
+
+2003-10-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c:
+	When auto-declaring specials, players should still get the chance
+	to declare kongs if they have some.
+
+2003-09-30  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	The processing of chow claims was confused, with the result that
+	if other duplicate claims arrived while waiting for a chow to be
+	fully specificied, a confused state resulted.
+	The logic is now (hopefully) more straightforward, and duplicate
+	claims are silently ignored.
+
+2003-09-29  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* proto-decode-msg.pl: remove redundant condition
+
+	* proto-encode-msg.pl, sysdep.c, protocol.c:
+	eliminate warnings introduced by previous changes.
+
+	* proto-decode-msg.pl, proto-encode-msg.pl, sysdep.c:
+	Sort out backslashes at last. Still inelegant in places,
+	but hopefully correct and overflow-safe.
+
+	* gui.c: Messages should not undergo brace expansion.
+
+2003-09-28  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* proto-encode-msg.pl, sysdep.c, protocol.c:
+	Folded in Nicolas Boullis's fixes for buffer overflow.
+	Backslash escaping is still a mess.
+
+2003-09-27  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* proto-encode-msg.pl, proto-decode-msg.pl, gui-dial.c, controller.c:
+	Patches against buffer overruns from Nicolas Boullis.
+
+2003-08-24  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* proto-decode-msg.pl: Do backslash unescaping, for backslashes only.
+	(i.e. \\ - \, but single backslashes not changed)
+
+2003-08-21  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* proto-decode-msg.pl:
+	Has backslash escaping; but this is done in expand_protocol_text,
+	so we shouldn't do it here, but rather should make all char* fields
+	subject to expansion.
+
+2003-08-20  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* protocol.c, proto-encode-msg.pl:
+	Escape backslashes in char* arguments.
+
+	* sysdep.c: fix bug in backslash counting
+
+2003-06-08  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in:
+	control table manager compilation by TableManager variable,
+	(currently set to off) to avoid problems in releases.
+
+	* manager.c:
+	This now compiles, and handles (basically) the login message.
+
+2003-06-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* mprotocol.c: protocol-enums -> mprotocol-enums
+	remove superfluous variable
+
+	* manager.c: New file.
+
+2003-06-04  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* CHANGES, ChangeLog: 1.5.6
+
+2003-06-02  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* game.c: clear the konging flag after robbing a kong.
+	(Otherwise get consistency error in next hand.)
+
+2003-06-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	Ouch. Since the year dot, we haven't been setting cmsg_check when
+	loading a game from file! This causes state inconsistencies.
+
+2003-05-03  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in:
+	comment out mj-manager from programs, so it isn't made by default
+
+	* Makefile.in: Add targets for the table manager. [not in release]
+
+2003-04-21  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c:
+	Don't showraise messagewindow when info in main; for some reason,
+	this seems to raise the whole top-level window.
+
+2003-04-20  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in: add the auto-generation for the mproto files.
+	[not yet in release]
+
+	* proto-decode-msg.pl, proto-encode-msg.pl:
+	generalize to deal with mcmsg and mpmsg [not yet in release]
+
+	* mprotocol.c, mprotocol.h: New file. [not yet in release]
+
+	* xmj.man: table colour, change to DiscDoubles semantics.
+
+2003-04-17  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	Change semantics of DiscarderDoubles to match singaporean play
+	(as it should have been): discarder pays double, but on self-draw
+	everybody pays double.
+	Simplify cannoning logic.
+
+2003-04-16  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui.c, gui-dial.c: Add table colour display option.
+
+2003-04-13  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* game.c, scoring.c:
+	Trivial code tidy: make more use of is_green instead of checking
+	for individual green tiles.
+
+2003-04-12  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	Tidy: set discard to 0 when MahJong from hand, instead of leaving
+	it uninitialized.
+
+2003-04-11  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* xmj.man, gui-dial.c: Change GUI description of auto-declare options.
+
+	* ChangeLog, CHANGES: 1.5.5
+
+	* scoring.c:
+	Bug fix: was noting Imperial Jade when having Thirteen Orphans.
+
+	* gui.c: Auto-declaration of winning hand now claims the discard too.
+
+	* gui.c:
+	Fix auto declaration of winning hands to allow for Special Sets.
+
+2003-04-10  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog, CHANGES: 1.5.4
+
+	* gui.c:
+	fix error in Message processing: was displaying (possibly NULL)
+	unexpanded text instead of expanded!
+
+	* gui.c: Change xmj.ini searching behaviour under Windows.
+
+	* sysdep.h, sysdep.c:
+	Change get_homedir to return NULL when there's no homedir defined,
+	so calling program can decide where to look.
+
+2003-04-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	Initialize the open dialog fields during initialization, so that
+	an automatic connect picks up the right values.
+
+2003-04-05  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* CHANGES, ChangeLog: 1.5.3
+
+2003-04-04  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c, gui.c, gui.h, xmj.man:
+	Add a selector for the text font used for fixed width text.
+
+	* game.c: Add discarded_tile_count field to game structure.
+	Use it in End cannon.
+
+	* game.h: Add discarded_tile_count field to game structure.
+
+2003-04-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* CHANGES: indentation typos.
+
+	* ChangeLog: 1.5.2
+
+	* xmj.man: message text entry update, and "keep cursor here" box.
+
+	* CHANGES: 1.5.2
+
+2003-03-31  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	Pop down chowdialog after using it when dealing with old server.
+
+	* gui.c: setup dialogs after error messages, in case something went
+	wrong. (Only really needed for one case: mistaken chow at
+	mah jong when dealing with old server.)
+
+2003-03-30  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c, greedy.c, game.h, gui.c, gui-dial.c, game.c,
+          protocol.h:: 
+	Break apart the pending flag into chowpending and mjpending.
+	Do legality testing for an AnyPos chow claim during MahJong.
+	This requires a protocol change: before now, AnyPos was illegal
+	during MahJonging. Pversion now 1050.
+
+	* gui.h: add server_pversion.
+
+	* game.c: Add checking for an anypos chow in the mahjonging state.
+
+2003-03-25  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	Add a checkbox to keep the keyboard focus in the message entry.
+
+2003-03-23  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c, client.h, sysdep.h, sysdep.c, client.c:
+	Add some hacks to allow an address of "-" to mean stdin
+	and stdout. Only really likely to work under Unix, but who knows...
+
+	* controller.c: print errno when get_line returns null.
+
+	* controller.c:
+	Don't allow reconnects while end_on_disconnect is in progress.
+
+2003-03-22  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* protocol.c, protocol.h:
+	protocol expansion should yield empty string when given NULL source.
+
+2003-03-16  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog, CHANGES: 1.5.1
+
+	* proto-decode-msg.pl: Work round bugs in Microsoft sscanf:
+	instead of using " %n" in format to advance to next item,
+	use "%n" and explicit loop over white space.
+	(Symptom: %n was returning ridiculous (or possibly no) values).
+
+	* controller.c: Fix the handling of disconnection before game starts,
+	and the assignnent of ids to players, and the finding
+	of a player structure in the game for a new player.
+
+2003-03-15  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog: 1.5
+
+	* README: add tiles-small
+
+	* CHANGES: 1.5
+
+	* gui.c: Change XmjOption to Display.
+	(Still read XmjOption, of course.)
+
+	* xmj.man: Change XmjOption to Display.
+
+2003-03-14  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* xmj.man: Describe LosersSettle, EastDoubles, DiscDoubles.
+
+	* protocol.h: Add GODiscDoubles.
+	Go to pversion 1040.
+
+	* game.c: Add GODiscDoubles
+
+	* controller.c: Add DiscDoubles
+
+2003-03-10  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* FILES-src, FILES-binary, MANIFEST: Add tiles-small.
+
+	* controller.c: fix cannon scoring when no east doubles.
+
+	* controller.c, protocol.h, game.c: Add GOLosersSettle.
+
+	* controller.c: remove historical relict.
+
+	* game.c, controller.c: Add GOEastDoubles.
+
+	* protocol.h: Add GOEastDoubles.
+	Pversion set to 1039 while adding options.
+
+2003-03-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	If the message entry window has focus, don't take it away.
+
+2003-03-05  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c: Implement the LoadState pmsg.
+
+	* game.h: Add game_has_started.
+
+	* gui.c: handle a second ConnectReply (e.g. in response to loadstate)
+
+	* game.c: Add game_has_started.
+	Allow deletion of players until game has started.
+	Set active=0 on receipt of Game msg.
+
+2003-03-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* protocol.h: Add the LoadState pmsg. Protocol version 1038.
+
+	* gui.c, game.c, gui-dial.c, controller.c:
+	Remove some compiler warnings.
+
+2003-02-27  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog: up to 1.5pre5
+
+	* xmj.man: Bring the documentation up to 1.5pre5 level.
+
+2003-02-20  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	I believe this implements disconnect penalties, but it needs some
+	testing.
+
+2003-02-19  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	--exit-on-disconnect still means it, even before a game has started.
+
+	* gui.h, gui.c, gui-dial.c, controller.c:
+	Implement client local timeouts.
+
+	* protocol.h:
+	Define empty name in CMsgPlayerMsg to mean "delete player".
+	Add GOTimeoutGrace game option.
+	Protocol version 1036.
+
+	* game.c: Add the TimeoutGrace game option.
+
+	* player.h: Add POLocalTimeouts option.
+
+	* controller.c:
+	If players disconnect before the game starts, don't exit.
+	(Assuming all connected players support the deletion of players.)
+
+	* game.c:
+	Handle the new meaning of CMsgPlayer with empty name as "delete
+	player".
+
+	* game.h: Renumber the states so that HandComplete is zero.
+	This has the useful side effect that if a Game is initialized
+	in the usual way by zeroing, it starts in HandComplete, which
+	makes more sense than "Dealing". It should have no-non side effects,
+	since nothing assumes anything about the numerical values.
+
+2003-02-18  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: rename temp new rcfile just in case it helps on ME.
+
+	* sysdep.c: downgrade two warnings to info; remove / in C:/ for
+	Windows root.
+
+	* gui.c: fix typo in warning
+
+	* gui.c, gui.h: *** empty log message ***
+
+	* gui-dial.c: Change warning stuff for new log_msg.
+
+	* sysdep.h, sysdep.c:
+	Generalized warn() to a log_msg with different warning levels.
+	Keep warn(), and add info().
+	Change warning_hook to log_msg_hook taking warning level.
+
+	* gui-dial.c: try to avoid accidental discards
+
+	* gui-dial.c: remove stuff that was in wrong place (and commented out)
+
+	* controller.c: I think this correctly implements --end-on-disconnect.
+	Further testing would be good.
+
+	* gui.c: Fix long-standing stupid bug in washout handling
+	causing gtk-critical errors.
+	Also, print the WashOut reason field.
+
+	* gui.c: Well, well. We segfaulted on messages from the controller!
+
+2003-02-17  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* game.c: Add explanatory comment.
+
+	* game.c:
+	Prevent players discarding when they should be drawing a tile.
+	(How did this one last so long?)
+
+	* gui-dial.c: Argh! Fix erroneous updating of short status window.
+
+2003-02-16  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: choose smaller display sizes on Windows.
+
+	* sysdep.c: Windows (or mine at least) doesn't have vsnprintf.
+	Increase the buffer size in warn(); and make it non-static.
+
+	* makedep:
+	Handle the change in semantics of -MM in gcc versions 3.1 and later.
+
+	* gui-dial.c, gui.c: catch warnings during re-creation of display
+
+	* gui.h, gui.c, gui-dial.c:
+	Add display size choosing to display prefs panel
+
+	* gui-dial.c: Whoops. Finish last change.
+
+	* gui.c, gui-dial.c:
+	remove the robot player name preferences from Display prefs;
+	make the entries in the open dialog sticky instead.
+
+	* gui.h, gui.c, gui-dial.c:
+	Get warnings into the display even if they happen
+	before the warnings window is available.
+
+	* gui.h, gui-dial.c, gui.c: Add options to select main font.
+
+2003-02-15  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: warningentry shd be initially hidden.
+
+	* gui.c: add rcfile name to some of the warnings.
+
+	* sysdep.h, sysdep.c: Add the warning_hook to warn().
+
+	* gui.h, gui.c, gui-dial.c:
+	Use new warning hook to put warnings into a new window, and
+	add a menu entry to display them.
+
+	* gui-dial.c: remove dcs from "about" text
+
+	* sysdep.c:
+	re-arrange warn so that it formats the string into a buffer first
+	and then prints it.
+
+	* client.c: client_find_sets: returns pungs ahead of chows
+
+	* client.h: correct and change spec in comment for client_find_sets,
+	concerning order of returned sets
+
+	* gui.c: fix bug in auto-declaring specials when a new one is drawn.
+
+	* controller.c: Add --no-manager option.
+
+	* game.c: clarification in manager testing.
+
+	* game.h: add comment allowing -1 as manager value
+
+2003-02-14  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: add id to short status window
+
+2003-02-11  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c:
+	Oops. Had non-block-initial declaration. gcc-3 must be forgiving.
+
+	* gui-dial.c:
+	change New game and Join game menu entries to be more suggestive.
+
+	* gui.c: *** empty log message ***
+
+	* gui-dial.c:
+	Add the playing_auto_winning/losing options to preference dialog.
+
+	* gui-dial.c:
+	if'd out  thing preventing discard callback being invoked when
+	discard dialog is not visible (which should be impossible anyway,
+	so I'm not convinced this happens).
+
+	* gui.h, gui.c:
+	Implement auto declaring of closed sets in winning and losing hands.
+
+2003-02-09  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui.c, gui-dial.c: Add the playing preferences dialog,
+	with the auto_declare_specials preference in it.
+
+	* gui.h, gui.c: Implement the programming of auto declaring specials.
+
+	* controller.c: insist on a non-null name in Connect messages.
+
+	* gui-dial.c: remove game info and messages entry from show menu when
+	they're in the main window.
+
+	* gui.h, gui-dial.c, gui.c:
+	Make the name field in the open dialog sticky when connecting
+	to a remote.
+
+	* gui.c: Make Address setting a subgroup of OpenDialog.
+
+	* gui.c, gui-dial.c: Implement info_in_main as a display option.
+
+	* gui-dial.c: in short info window, put "suspended" in separate line
+
+	* gui-dial.c:
+	Handle the inclusion of the messaging window into the main window.
+
+	* gui.c:
+	Improve format of arriving messages (don't waste line at end of
+	messagetext);
+	don't set up the dialogs when a message arrives (to avoid reverting
+	focus to the playing dialogs).
+
+2003-02-08  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: I think this is a reasonable info window implementation.
+	Couldn't put in on the board (there's no space when we'ren
+	not showing the wall), but this is fairly compact.
+
+	* gui.h: add some variables for info windows in main
+
+	* gui-dial.c:
+	Implement info window in main, but I don't think I like it.
+	Can I put them over the main window instead?
+
+	* gui.c: move partway to implementing info_windows_in_main, and fix bug
+	introduced in last change (wasn't starting robots with correct
+	address)
+
+	* gui.c:
+	move the creation of text,message,status windows into create_display,
+	and destroy them in destroy_display
+
+2003-02-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c, gui.h, gui.c:
+	Make the address sticky (Address entry in .xmjrc) when joining
+	remote games.
+
+	* gui.c: strip trailing white space from host names
+
+	* gui.h, gui.c, xmj.man, gui-dial.c:
+	Add the NoPopups display option to xmj;
+	change text on apply/save buttons in display options panel.
+
+	* scoring.c:
+	Fix the treatment of scoring options with limits, and dbls/pts in
+	a no-limit game; impose a hard limit of 1E8 to avoid arith overflow.
+
+2003-02-04  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	protect add_or_remove_..._accelerators against the accelerators
+	not being defined.
+
+	* gui.c: Make WALL_SIZE work when there is a game but no wall;
+	and don't set up the wall if there is no wall (because
+	the size is zero, e.g. between hands).
+
+	* xmj.man: typo
+
+	* gui.h, gui.c, gui-dial.c:
+	Change read_or_update_rcfile parameters to be read/update
+	flag bit sets. New enum XmjrcGroup for these.
+
+2003-02-03  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	In the new game panel, don't show the host entry (makes no sense,
+	since we're starting a local server). But set the host entry
+	to localhost so that clients are correctly started.
+
+	* game.c: Sigh. Previous bug fix needs to be applied in both places
+	cannons are detected. There should be a macro or something.
+	Thanks to Thorsten Michels again.
+
+2002-08-09  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* CHANGES, ChangeLog: 1.4.1
+
+	* game.c:
+	Bug fix in cannon with last four tiles. (Thanks to Thorsten Michels.)
+
+2002-04-29  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: remove some unused variables
+
+	* protocol.h, protocol.c: Add the protocol_version global variable.
+          (N.B. This variable is not yet used or set; this has strayed in
+	  from the development version.)
+	
+2002-03-31  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	Bug fix: when resuming a game, need to set out timeout from the
+	game option.
+
+2002-03-30  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog, CHANGES: 1.4
+
+	* xmj.man: Add KongHas3Types.
+
+	* scoring.c, player.c, gui.c, player.h:
+	Used annexed instead of melded, since melded is inaccurate.
+
+	* gui.c: Handle Millington kongs
+
+	* scoring.c: Handle GOKongHas3Types
+
+	* game.c: Add GOKongHas3Types.
+
+	* player.h: Add melded flag to Tileset for Millington kongs.
+
+	* player.c: Handle three types of kong. Note that the three types are
+	distinguished, and the printed forms distinguished (by printing
+	TT-TT-TT-TT for a melded kong and TT-TT-TT+TT for a claimed kong)
+	always, regardless of options or protocol versions, since to do
+	anything else would involve importing external info into the module.
+	This is thus not strictly backward compatible; but it happens to be
+	backward compatible by implementation, since the previous tileset
+	parser only looks at the first separator to distinguish open and
+	closed kongs.
+
+	* protocol.h: Add GOKongHas3Types; proto version 1034
+
+2002-02-04  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog, CHANGES: 1.3.2
+
+	* gui-dial.c, gui.c:
+	Fix for infelicity in spinbuttons: they do not change the internal
+	value when numbers are typed until return is hit, so call update
+	explicitly before getting value.
+
+2002-01-08  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog: really 1.3.1
+
+	* gui.c: Remove ugly hack that Nicolas justly rejects.
+
+	* ChangeLog, CHANGES: 1.3.1
+
+	* gui.c: code for animation both with internal widgets and with popups.
+	Default to popups for Windows, where it seems to smooth animation.
+
+2002-01-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c:
+	don't uniconify auxilary windows that have been closed while the main
+	window was iconified.
+
+	* Makefile.in:
+	remove a mysterious 0240(nbsp) character that got in at some point.
+
+	* gui.c: (a) sort out bugs in the new tiletip implementation.
+	(b) fix bug in option reading (IconifyDialogs).
+
+2002-01-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* FILES-src: oops -- add vlazyfixed
+
+	* xmj.man: tiletips shown for selected tile when "always".
+
+	* gui.c:
+	(a) Make tiletips of mouse and selected tile interact correctly.
+	(b) Don't install toggle callback on non-toggles!
+
+	* gui.c: fix bug in get_relative_posn.
+
+	* gui.c: Changed tiletips into children of boarfixed.
+	Unfortunately, this has exposed a bug in get_relative_posn, sigh.
+
+	* gui.c:
+	If tiletips always shown, show the tiletip of the selected tile.
+
+	* gui.c: Remove the top_window visibility tracking. No longer needed,
+	since now there are no more independent popups/animations to suppress.
+
+	* gui.c: Make the claim windows descendants of the main window as well.
+	(The positioning is no longer quite perfect, since I'm not bothering
+	to reposition them for Mah Jong!, but just doing it once on Pung!.
+	Never mind.)
+
+2002-01-05  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in, gui.h, gui.c:
+	Introduced the vlazy_fixed widget, and used it to finally fix up
+	animation so that the floating animations are part of the display
+	window instead of being independent.
+
+	* vlazyfixed.c, vlazyfixed.h: *** empty log message ***
+
+	* MANIFEST:
+	Introduced the vlazy_fixed widget, and used it to finally fix up
+	animation so that the floating animations are part of the display
+	window instead of being independent.
+
+2002-01-02  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog: Really 1.3
+
+	* protocol.h: game opt optnat field should be unsigned
+
+	* greedy.c: suppress a warning on really picky compilers
+
+	* sysdep.h: define socklen_t for windows
+
+	* sysdep.c: hpup fix and warning suppression
+
+	* CHANGES: 1.3 (hopefully...)
+
+	* ChangeLog: 1.3, I  hope.
+
+2001-12-29  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* README: add PATH reminder
+
+	* MANIFEST: credit for arabic tiles
+
+2001-12-28  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* sysdep.h: try to remove warning in hpux
+
+	* xmj.man: note that left/right accelerators don't work under Windows.
+
+	* gui.c: vis_callback only works under X.
+
+2001-12-27  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in: Add some example LDLIBS settings.
+
+	* gui-dial.c, player.c, controller.c, gui.c:
+	Make sure all functions pre-declared as static are then
+	declared as static, to suppress warnings on HP compiler.
+
+2001-12-26  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* make-release:
+	Add -Wl,--noinhibit-exec to link options for static xmj.
+	This is because in order to get arrow key accelerators we are
+	redefining a symbol in libgtk.a, and normally ld will consider that an
+	error.
+
+	* MANIFEST: Add tiles-numbered
+
+	* ChangeLog, CHANGES: 1.3pre1
+
+	* gui-dial.c: close button takes focus in scoring window
+
+	* gui.c, gui-dial.c, xmj.man:
+	IconifyDialogs not supported under Windows.
+
+	* gui.c: eliminate warnings
+
+2001-12-24  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: Don't try the X-specific (un)iconify stuff.
+
+	* sysdep.c: start_background_program_with_io for Windows.
+
+	* sysdep.h: comment update
+
+2001-12-23  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c, gui.h, gui-dial.c:
+	fix dialog_popup: wasn't handling CentredOnce etc. correctly!
+	Also, open_dialog wasn't being closed with saving_posn.
+
+	* gui-dial.c, gui.c, gui.h, xmj.man:
+	Implement the IconifyDialogs display option.
+
+	* gui.c: avoid animating or popping up claim windows if the top window
+	is unmapped or obscured. (Unfortunately, this still doesn't
+	seem to cover the case of the window being offscreen, but I'm
+	not sure I can be bothered to do anything about that.)
+
+	* gui-dial.c: fix accelerator key for save as...
+
+2001-12-17  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in: make version.h no longer depend on version.h.in .
+
+	* make-release: remove version.h before making it.
+
+2001-12-16  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: suppress warning
+
+	* scoring.c: remove a warning
+
+	* controller.c, gui-dial.c: remove multi-line string literals
+
+2001-12-09  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* README: add tiles-numbered
+
+	* FILES-binary, FILES-src: Add tiles-numbered
+
+2001-12-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: wall tiles should not take focus.
+
+	* xmj.man: document menu accelerators
+
+	* gui-dial.c:
+	Add accelerators to menu, and have start button take focus
+	in menus.
+
+	* sysdep.c: Add the start_background_program_with_io function.
+	However, the Windows version is entirely unchecked, and
+	may not even compile. Check it at the office.
+
+	* sysdep.h: Add start_background_program_with_io
+
+	* gui.c: Use the new server output feature to detect when it's started,
+	and reduce the sleep times to speed up game starting.
+
+	* controller.c: change output to OK: address or FAILED: reason
+
+2001-12-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	print the successful socket (as a valid --address argument)
+	on stdout as Socket: socket. If fail, print Socket: -1.
+
+	* gui.h: Add a game extras struct
+
+	* gui.c: Change dead wall positioning so that it's always determined by
+	the original start of the dead wall.
+
+	* xmj.man:
+	document keyboard accelerators and change of Done to Finished
+	in scoring dialogue.
+
+	* gui-dial.c: add keyboard accels to scoring dialog;
+	change "done" to "finished".
+
+2001-12-05  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: Add accelerators to chow dialog
+
+	* gui.c: fix behaviour of arrow keys when no tile selected
+
+2001-12-04  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: add accelerators to ds dialog
+
+	* gui-dial.c: add accelerators to turn dialog
+
+	* gui-dial.c: Add accelerators for the discard dialog.
+
+	* gui.c: move include gdkkeysyms to gui.h
+
+	* gui.h: include gdkkeysyms
+
+	* gui.c:
+	Implemented, with extreme difficulty owing to GTK's arrogant ideas
+	about what you're allowed to do, left/right arrow keys for tile
+	selection changing. We're now dependend on gtk sources... yech.
+
+2001-12-03  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* scoring.c, xmj.man:
+	Add ConcealedFully, ConcealedAlmost and LosersPurity game options and
+	implement their scoring.
+	Change All Honours and All Terminals to get All Majors also.
+
+	* game.c:
+	Add ConcealedFully, ConcealedAlmost and LosersPurity game options.
+
+	* protocol.h:
+	Add ConcealedFully, ConcealedAlmost and LosersPurity game options.
+	Increase protocol version to 1032.
+
+2001-12-02  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* sysdep.h: Add sys/time.h back again, for gettimeofday.
+
+	* gui.h, gui-dial.c, gui.c, xmj.man, greedy.c:
+	Add --name for mj-player (which was supposed to be there all along),
+	add entries for it in the new game panel, and add display options
+	to give defaults for it.
+
+2001-11-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* sysdep.h: use time.h instead of sys/time.h
+
+2001-09-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog, CHANGES: 1.2.3
+
+	* gui.c: Aaargh! Was clearing discard_history in the wrong place! So it
+	wasn't getting cleared at all.
+
+
+2001-09-04  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog:
+	This really is release 1.2.2, unless something else goes wrong.
+
+	* gui.c: Copy pref_showwall from --[no-]show-wall option.
+
+	* xmj.man: Show-wall display option now has immediate effect.
+
+	* CHANGES: 1.2.2 really: includes display option changing.
+
+	* gui.c: when recreating topwindow, put it where it was.
+
+	* gui.c: handle discard placement when recreating display.
+
+	* gui.c: display rebuilding now handles wall.
+
+	* gui.c: display recreation handles players and dialogs.
+	Now for wall and discard...
+
+	* ChangeLog: includes changes not in 1.2.2
+
+	* ChangeLog: for 1.2.2
+
+	* CHANGES: new date for 1.2.2; maybe finally got it right.
+
+	* sysdep.h: include unistd.h in windows as well.
+
+	* gui.h, gui-dial.c, gui.c:
+	Checkpoint: moved display creation into separate function,
+	made destroy function, remake display when options change.
+	But still need to handle redisplay of players, discards and
+	dialog setup.
+
+	* client.c: client_close should set g->fd to invalid
+
+2001-09-03  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui-dial.c, gui.c:
+	Checkpoint: moved display creation into separate function,
+	made destroy function, remake display when options change.
+	But still need to handle redisplay of players, discards and
+	dialog setup.
+
+	* client.c: client_close should set g->fd to invalid
+
+	* Makefile.in: Use NULL for tileset path, for Windoze.
+
+2001-09-02  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in: remove quotes wrong for Windows
+
+	* ChangeLog, CHANGES: 1.2.2
+
+	* gui.h, gui-dial.c, gui.c, xmj.man:
+	Add Tileset and Tileset Path display options to gui.
+
+	* Makefile.in: Change for TILESET(PATH)
+
+	* xmj.man: Remove --tilepixmapdir, replace by
+	--tileset and --tileset-path .
+
+2001-08-21  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog, CHANGES: for 1.2.1
+
+	* README: change donation text.
+
+2001-08-19  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* scoring.c:
+	fix bug in filling only place (was counting claimed discard as
+	an exposed tile when calculating "all exposed").
+
+	* game.c: the game_draw/peek_tile functions must return error if
+	the live_used is >=, not just ==, the live_end, because
+	the draw_loose_tile assumes this (with the non-Millington dead wall).
+
+	* controller.h: hike number of history els to 1024
+
+2001-08-15  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c, xmj.man: Remove --tilepixmapdir, replace by
+	--tileset and --tileset-path . (NOT IN 1.2.1.)
+
+2001-08-11  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in: make version.h if not there.
+
+2001-08-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* version.h.in: *** empty log message ***
+
+	* ChangeLog, CHANGES: For 1.2
+
+	* version.h: File deleted.
+
+	* make-release: put version in version.h
+
+	* version.h: have version subbed in by make-release.
+
+	* controller.c:
+	Add the hack for dumping history of hand by second save state request.
+
+2001-08-05  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* proto-encode-msg.pl, gui.c, game.c, controller.c, greedy.c, protocol.c, protocol.h:
+	Add CMsgComment (with hacks to give it code #); protocol version to
+	1030.
+
+	* xmj.man: Update for new features.
+
+	* gui-dial.c, gui.h, controller.c, gui.c:
+	Add --save-on-exit to server and gui panel.
+
+2001-08-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c: remember to initialize the game extras structure.
+
+2001-07-31  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c, gui.c, gui.h: Add Resume game... entry to Game menu.
+
+	* controller.c: Add --no-id-required option.
+
+	* controller.c: fix game loading.
+
+	* gui.c, gui.h, gui-dial.c: Add Save as... menu entry to Game menu.
+
+	* controller.c: More intelligent choice of default save file name:
+	previous explicit name, failing which:
+	file given by --load-game option, failing which:
+	game-DATE-SEQ up to seq of 9.
+
+2001-07-30  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui.c, gui-dial.c: Popup notice when state saved.
+	Add save option to connect menu.
+	Rename Connect menu to Game.
+
+	* controller.c: Take notice of the filename in SaveState, and return
+	a StateSaved message.
+
+2001-07-29  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* greedy.c, controller.c, game.c: Handle CMsgStateSaved.
+
+	* gui.c: Handle (by doing nothing) CMsgStateSaved.
+
+	* protocol.h: Add filename field to PMsgSaveState.
+	Add CMsgStateSaved.
+
+	* Makefile.in: add EXTRA_CFLAGS for command line use.
+
+	* controller.c:
+	On resumption, feed the history to all reconnecting players at once,
+	rather than one after the other.
+
+	* controller.c:
+	implemented restoring of game state (via --load-game option),
+	though file name is currently ignored.
+
+	* game.c:
+	handling CMsgWall: load until MAX_WALL_SIZE or end of message.
+	(game.wall.size is actually set at NewHand, not before).
+
+	* game.c: set options from default when handling a Game CMsg,
+	rather than clearing them.
+
+	* controller.h, controller.c:
+	Adjusted save_state so that it doesn't save completed hands any more.
+	Added prehistory to game structure so we _can_ save a completed hand
+	if we want to later.
+
+2001-07-28  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c: implemented game saving again.
+	Next: loading it!
+
+	* sysdep.h, sysdep.c: Add fd_put_line and fd_get_line.
+
+	* gui.c, game.c, controller.c, greedy.c: Handle CMsgWallMsg.
+
+	* protocol.h: Add CMsgWallMsg. Inc pversion to 1025 during development.
+
+	* controller.h, controller.c:
+	Get rid of player histories, and just keep a single
+	game history.
+
+2001-05-17  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* xmj.man: New major version starting at 1.1 release
+
+	* xmj.man: remove mistaken backslashes
+
+	* CHANGES: 1.1 really (slightly more human text)
+
+	* tiles.h, version.h, proto-encode-msg.pl, protocol.c, protocol.h, runtest, scoring.c, scoring.h, stats, sysdep.c, sysdep.h, tiles.c, make-release, makedep, makefallbacktiles, makefile.msvc.old, maketxt, mj-player.man, mj-server.man, player.c, player.h, proto-decode-msg.pl, gui-dial.c, gui.c, gui.h, iconres.rs, lazyfixed.c, lazyfixed.h, logstats, make-enums.pl, controller.h, game.c, game.h, greedy.c, ChangeLog, FILES-binary, FILES-src, LICENCE, MANIFEST, Makefile.in, README, client.c, client.h, controller.c:
+	New major version starting at 1.1 release
+
+	* version.h: Version 1.1
+
+	* CHANGES: Change for 1.1
+
+	* ChangeLog: Changes up to 1.1
+
+	* gui.c: Tidy; remove the .xmjrc.new file after using it.
+
+	* sysdep.c: Back out last change (socklen_t not defined in windoze).
+	Add unlink() for windoze.
+
+	* sysdep.h:
+	Add a defn for unlink() in Windows (provided by mingw anyway, but
+	we prob shouldn't assume that).
+
+2001-05-16  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* README: typo
+
+	* sysdep.c: use socklen_t where appropriate
+
+	* gui-dial.c: remove superfluous semi-colon
+
+	* sysdep.h, sysdep.c: Add get_homedir.
+
+	* gui.c: Use get_homedir.
+
+	* game.c: don't use uint; not always defined.
+
+2001-05-15  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* xmj.man: fix error in proto desc
+
+	* protocol.c:
+	Skip leading white space when reading game option entry description
+	field.
+
+	* make-release:
+	Change mj-*-static.tar to static-mj-*.tar in a desperate attempt
+	to stop	the idiots who download the static version unnecessarily.
+
+2001-05-14  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: change wording
+
+	* maketxt: fixed a bug or two, and add clause for my game option macro.
+
+	* xmj.man: Documented all the game options.
+
+2001-05-13  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui.c, gui-dial.c: Add nagware.
+
+	* protocol.h: remove old comment.
+
+	* gui.c: update sequence number in stdin callback
+
+	* client.h, client.c:
+	client_send_packet maintains and returns packet sequence number.
+
+	* game.h: Add cseqno field for client_ routines.
+
+	* controller.c: was wrongly incrementing sequence number twice
+
+2001-05-11  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: During kong, always query for Mah Jong. (It's possible for
+	player_can_mah_jong(..,0) to be true, but for us not to be able
+	to go out, because of minimum double requirements.)
+
+	* xmj.man: Change DisplayOption to XmjOption.
+
+	* gui.c: (a) make last change work (shd compile before checking in...)
+	(b) Change DisplayOption to XmjOption.
+
+	* gui.c: Don't put up the kong claim window until we know we need it.
+
+	* gui.c: remove incorrect guard in canmahjong answer clause
+	(has no id).
+
+2001-05-10  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* protocol.h, game.c, scoring.c: Add MahJongScore option.
+
+2001-05-08  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* xmj.man: Documented changes to xmj.
+	Next, document game options.
+	(And possible player strategy options.)
+
+	* controller.c: Don't make robot players managers.
+
+	* gui.c, gui-dial.c:
+	Only apply game preferences/options when allowed to.
+
+	* controller.c: Set the game manager to be the first player to connect.
+
+	* gui-dial.c:
+	Initialize new game timeout option entry from preference table.
+
+	* gui.h, gui.c, gui-dial.c:
+	Add showwall preference to display options panel.
+
+	* gui.c, gui-dial.c:
+	Use player names in scoring window tabs, and make homogeneous tabs.
+
+	* xmj.man: remove old mj-player option example.
+
+	* xmj.man: update mj-server options.
+
+2001-05-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: Make all buttons on prefs panel close window.
+
+	* controller.c: Add --option-file argument.
+
+	* greedy.c: Make sure to get the game options.
+
+	* protocol.h, gui.c, game.c: Add DeadWall option.
+
+	* game.c: Bug fix: game_set_option_in_table was not correctly setting
+	options with unknown codes.
+
+	* protocol.h, controller.c, game.c, gui.c:
+	Make dead wall type option DeadWall16 (Millington) rather than
+	DeadWall14 (non-Millington).
+
+2001-05-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* lazyfixed.h, lazyfixed.c:
+	Now only overrides the remove method of fixed, as this seems to
+	suffice to eliminate flicking. Don't ask me why.
+
+	* gui.c: Changed all the lazy calls back to fixed, since we've made
+	lazyfixed inherit all the external methods of fixed.
+
+	* lazyfixed.c:
+	It seems that it's only the remove method that causes flickering.
+	That should mean we can use all the supplied methods.
+
+	* gui.c: remove now unnecessary resize on discard_area
+
+	* game.c: game_handle_cmsg should ignore NoClaims for old discards!
+
+	* FILES-src, MANIFEST: Add the lazyfixed.[ch] files.
+
+	* Makefile.in: Add the lazyfixed widget to the Makefile.
+
+	* gui.c, gui.h: Use my own lazyfixed widget for the discard area.
+	This reduces (eliminates!) flickering in the wall.
+
+	* lazyfixed.c, lazyfixed.h: New file.
+
+	* controller.c: Have DeadWall14 as default when enabled.
+
+	* gui.c, gui.h, gui-dial.c: Add tiletips display option.
+	Current game options... menu entry only sensitive during game.
+
+2001-05-05  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* protocol.h, game.c, scoring.c, gui.c: Add DeadWall14 option.
+
+	* protocol.h, game.c, controller.c: Add FlowersLoose option.
+
+2001-05-03  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c, gui.c:
+	make declaring option dialog handle Flowers option.
+
+	* game.c: make game_get_option_value handle null game.
+
+	* protocol.h, controller.c, game.c: Handle the Flowers option.
+
+	* gui.c: Display now handles walls smaller than the maximum.
+
+2001-05-02  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c, gui.c:
+	Use wall.size field of game struct instead of 144.
+
+	* gui.c, gui-dial.c, game.c, game.h, controller.c, scoring.c, greedy.c:
+	Unpack the internal info struct in the game struct; just have
+	fields directly in the main struct.
+
+	* game.h, game.c, controller.c:
+	Remove the superfluous discard_serial field from the game struct.
+
+	* gui.c: Remove a fixed FIXME comment.
+
+	* game.c, game.h: Add wall.size field to game struct.
+
+	* tiles.c: replace 144 by MAX_WALL_SIZE where appropriate.
+	And add includespecials arg to random_tiles.
+
+	* controller.c, tiles.h: Add includespecials arg to random_tiles.
+
+	* game.h: replace 144 by MAX_WALL_SIZE where appropriate.
+
+	* protocol.h: Add a MAX_WALL_SIZE define.
+
+2001-05-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: Query all options on getting game message, instead of
+	just querying timeout on connect.
+
+	* controller.c:
+	GameOption and PlayerOptionSet messages should not go into
+	the history.
+	Clients must always query/set.
+
+	* game.c: And make handle_cmsg clear the option table on GameMsg, not
+	copy from default.
+
+	* game.c, game.h: add game_clear_option_table
+
+	* gui-dial.c: more slight improvs to prefs panel.
+
+	* gui.h, gui-dial.c, gui.c:
+	Handle rcfile reading better: changed spec and name of
+	read_or_update_rcfile.
+
+	* gui-dial.c: Improvement to prefs panel.
+
+	* scoring.c: rationalize the own flower/season scoring a bit.
+
+	* gui.c: make showwall global; remove the tilesleft label, which is
+	now done in the dialogs.
+
+	* gui.h: Make showwall global.
+
+	* gui-dial.c:
+	When not showing the wall, put the tiles left in the dialog labels.
+
+	* gui.c: Add a tilesleft indication when not showing the wall.
+
+2001-04-30  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	Add some protection against flooding: call the timeout handler
+	if the timeleft goes negative.
+
+	* gui.c: Handle querying of mj after kong properly (was getting
+	into loop).
+
+	* gui-dial.c: Don't put disabled options in the game options panel.
+
+	* protocol.h, game.c: Add Flower scoring options.
+
+	* scoring.c: Implement Flower scoring options.
+	(And add parens round score arg in doscore.)
+
+	* scoring.c: Use GOSevenPairsVal for scoring.
+
+	* gui-dial.c: In option panels, make reset sensitive only on change.
+
+2001-04-29  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* proto-encode-msg.pl:
+	If a (char *) arg starts with a space, escape it with backslash.
+
+	* gui.c: Call expand_protocol_text on scoring and settlement messages.
+
+	* scoring.c:
+	Rationalize the scoring code; it's now set up to take GOTScore values.
+
+	* player.c: get rid of qsort, and use bubblesort instead.
+	Doesn't actually make a huge difference, around 8%.
+
+	* protocol.c: increase buffer sizes.
+
+2001-04-28  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c, scoring.c, greedy.c, game.c, game.h:
+	Change the names of the option entry returning functions to make
+	it clear what they return; add game_get_option_value to get
+	a value from a game without fuss.
+
+	* gui-dial.c: Change Score type in option dialog to allow half limits.
+
+	* protocol.h: Changed defn of Score type to have centi-limits.
+
+	* protocol.h, game.c: Add SevenPairsVal option.
+
+	* gui-dial.c:
+	Simplify game option panels: don't show current value separately.
+
+	* player.h: Change player_can_mah_jong to take flags indicating certain
+	special hands are allowed; flags given (as bits) by MJSpecialHandFlags
+	enum.
+
+	* gui.c: Handle change to player_can_mah_jong spec.
+
+	* greedy.c: Handle SevenPairs.
+	(Don't try to get it, but don't pass it up if it just happens.)
+
+	* client.h, client.c:
+	Handle special sets in mah-jong; change to spec of client_find_sets.
+
+	* player.c:
+	Handle seven pairs. Required change to spec of player_can_mah_jong.
+
+	* protocol.h: Add SevenPairs game option.
+
+	* controller.c: Handle SevenPairs.
+
+	* game.c: Add SevenPairs game option and handle it.
+
+	* scoring.c: Handle scoring for seven pairs.
+
+	* game.c: Correct types of option function args.
+	And optimize option lookup.
+
+	* game.h: Correct types of option function args.
+
+	* gui.c: Ask server about ability to mah-jong, when robbing kongs.
+
+	* gui-dial.c: change style of prefs panel a bit
+
+	* gui.c: clear game option dialog on new game.
+
+	* scoring.c: Implement the ScoreLimit and NoLimit options.
+
+	* game.c: Add game_copy_option_table.
+
+	* gui.h: Implement game preferences panel.
+
+	* game.h: Add game_copy_option_table.
+
+	* gui.c, gui-dial.c: Implement game preferences panel.
+
+2001-04-18  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* protocol.c, gui-dial.c, controller.c: Add the GOTNat option type.
+
+	* game.c:
+	Add the GOTNat option type; add ScoreLimit and NoLimit options.
+	Change Timeout to Nat.
+
+	* protocol.h:
+	Add the GOTNat option type; add ScoreLimit and NoLimit options.
+
+2001-04-09  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui.c, gui-dial.c:
+	More work on option dialog: reset button for each entry,
+	and global update button. Make it update over creation and killing of
+	game.
+	This is awful mess. Make it properly OO sometime.
+
+2001-04-05  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c, gui.h, gui-dial.c:
+	Game option panel basically in place. Now add some options
+	and test it.
+
+	* gui.c: Have --size default to 17, not 18, for 800x600.
+	(for 1.0.4, included now in devel version so I don't forget.)
+
+	* CHANGES: 1.0.4 changes
+
+	* gui.c: Have --size default to 17, not 18, for 800x600.
+
+	* gui.h, gui-dial.c: checkpoint
+
+	* scoring.c: Bug fix: was always giving 2 for fishing the eyes, instead
+	of 4 for a major pair.
+
+2001-04-03  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* game.c: give unknown option null name in default table,
+	and infinite protocol, so always disabled.
+
+2001-04-02  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui-dial.c: checkpoint while implementing game option dialog
+
+	* game.c: fix warnings resulting from last change
+
+	* game.c, protocol.c, protocol.h:
+	add a userdata field to GameOptionEntry
+
+	* MANIFEST, FILES-src: add icon files
+
+	* Makefile.in: add stuff for Windows icon resource.
+
+	* iconres.rs: New file.
+
+2001-04-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: checkpoint; adding game option setting...
+
+2001-03-31  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* game.c, controller.c, game.h:
+	Introduced struct for option table, and changed game accordingly.
+	Added functions to get/set options in tables.
+
+2001-03-30  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui-dial.c, gui.c: Saving of display options done.
+
+2001-03-29  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: Basic rcfile reading for display options in place.
+
+2001-03-23  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* greedy.c:
+	added a little defensiveness: slight reluctance to discard to
+	the right player. Makes a small (not sig) improv.
+
+2001-03-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: pop down turn dialog at handcomplete (for washouts).
+
+2001-03-04  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	Add animation to the display options panel. (And fix bug.)
+
+2001-03-03  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui.c, gui-dial.c:
+	Added the Options menu, and the display options panel,
+	which allows switching dialog posns.
+	There are bugs when the program starts with -below and then
+	one switches to -central, but I don't think these are mine;
+	I can't be bothered to track down the gtk bugs.
+
+2001-03-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: hide discard dialog at start
+
+	* gui.h, gui-dial.c, gui.c:
+	move dialog (dependent on --dialog-XXX) creation into single function
+
+2001-02-26  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog: 1.0.3
+
+	* CHANGES: 1.0.3 changes
+
+	* gui.c: add read_rcfile stub
+
+	* gui-dial.c:
+	Oops. Positioning in dialogs-below has been broken for some time.
+	Now fixed.
+
+2001-02-20  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c: added --wallfile option to load wall from file.
+
+2001-02-11  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Makefile.in:
+	remove warnings and optimizations from production code makefile
+
+	* xmj.man: Add server --seed option.
+
+	* CHANGES: --seed server option.
+
+	* ChangeLog: 1.0.2
+
+	* CHANGES: 1.0.2 changes
+
+	* greedy.c:
+	If check_discard called while declaring specials, it's to try
+	robbing a kong. In fact, the players would cope correctly with
+	this situation anyway, but that was by accident!
+
+2001-02-10  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* version.h: release 1.0.2
+
+	* gui.c:
+	Fix bugs in handling of kongs declared while declaring specials.
+
+	* controller.c:
+	Fix bugs in handling of kongs declared while declaring specials.
+	Was not drawing a loose tile for the declarer! Also,
+	must allow claims, since theoretically possible to rob such kongs.
+
+	* game.c:
+	Fix bugs in handling of kongs declared while declaring specials.
+	(Must allow claims, since theoretically possible to rob them.)
+
+	* scoring.c: Correct the detection of Heaven's/Earth's Blessing.
+	Was relying on discard_serial, which would be incremented
+	by kongs declared in the initial phase. Now use the player
+	NoDiscard flags.
+
+2001-02-09  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: correct GPL name; extend copyright date.
+
+	* LICENCE: Correct name of GPL.
+
+2001-02-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* runtest: Add various useful options.
+
+	* greedy.c:
+	further extensive simplification; several really stupid bugs fixed;
+	extensive tuning. It is now definitely better: 1-2 sd better than
+	10.21, and 4sd better than release 1.0.
+	Details of intervening changes are in StuffToKeep.
+
+2001-01-30  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c: Make sure that the caller slot is correctly filled even
+	in the case of Heaven's Blessing (to avoid warning from
+	scoring module).
+
+	* controller.c:
+	provide a --seed  option to seed the random number generator.
+
+	* runtest:
+	Use a fixed series of games, given by initial seed 101, and then
+	incrementing for each game.
+
+	* greedy.c:
+	This is an almost complete restructing of the strategy code.
+	The same basic ideas are used, but now they are controlled
+	at user level by a smaller number of orthogonal (more or less)
+	parameters, which then generate the old-style parameters.
+	This is (will be) now documented, as it works well enough
+	to let people use it.
+	This rewrite was done on another system; the history of the
+	changes is in the separate file greedy.c-10.20-10.21,v
+	in the StuffToKeep directory.
+
+2001-01-29  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* sysdep.h, sysdep.c: add rand_seed
+
+	* version.h: 1.0.1
+
+2001-01-28  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* CHANGES: 1.0.1
+
+	* ChangeLog: for 1.0.1
+
+	* xmj.man: correct when scoring info window appears
+
+	* greedy.c:
+	more fiddles. This file has been transferred to the big pc for
+	experimentation.
+
+2001-01-27  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* greedy.c: This does OK compared to the 1.0 release. (The same.)
+	It's overly keen on no score hands (more than 25%), and not
+	quite keen enough on concealed hands.
+	Now strip out the old stuff.
+
+2001-01-26  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* logstats: helps to count Limit hands as wins...
+
+	* protocol.c: add variable for use by switch code.
+
+	* proto-encode-msg.pl:
+	allow bad entries in bool fields of incoming structures; treat as
+	TRUE, to match normal C practice.
+
+	* greedy.c: This did reasonably, but is still very chow-biased.
+
+	* game.h: game_flag should return a boolean.
+
+	* greedy.c: checkpoint on the way to revising.
+	This currently does very badly (-5s.d.).
+	It no-scores more often, but gets no-chows less often,
+	never gets concealed (why not?), and wins less often, and has a lower
+	score when not winning.
+	See last results of 2001-01-25.
+
+2001-01-25  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	wasn't setting discard field of DangerousDiscard message.
+
+	* logstats: Add one suit counting.
+
+2001-01-22  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* make-release: Include -lXi in static build arguments.
+	Exit if static build fails.
+
+	* gui.h: <errno.h>, not "errno.h"
+
+	* gui-dial.c:
+	The scoring info window needs to be a bit bigger on Windows,
+	as the font one gets by default is bigger.
+
+	* controller.c:
+	Must allow querying game options while game is suspended
+	(so that clients can get the timeout on startup).
+
+	* client.c: include system assert.h, not local.
+
+	* Makefile.in: A few changes to make it more Windows-friendly.
+
+	* gui.c: Move the big font loading to be with the fixed font loading.
+
+	* CHANGES: changes for 1.0
+
+	* ChangeLog: Update for release.
+
+	* greedy.c: rcs_id and version.h
+
+	* scoring.c: rcs_id
+
+	* controller.c: rcs_id and version.h
+
+	* sysdep.c, game.c, protocol.c, tiles.c, player.c, client.c: rcs_id
+
+	* index.html: Update for release.
+
+	* xmj.man: Add the discard timeout selector in new game.
+
+	* README: note about makefile.msvc.old
+
+	* FILES-src, MANIFEST: Add makefile.msvc.old
+
+	* makefile.msvc.old: *** empty log message ***
+
+2001-01-21  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: handle tile selection at mah jong a bit better
+
+	* gui-dial.c: handle timeout progress bar better
+
+	* gui.c: Query the game timeout option after connect.
+
+	* controller.c: Set timeout game option from command line.
+
+	* gui.h: add timeout selector to new game.
+
+	* protocol.c, game.c, sysdep.c: suppress uninitialized variable warning
+
+	* gui-dial.c, gui.c: add timeout selector to new game.
+	Suppress uninitialized variable warning.
+
+	* controller.c, scoring.c: suppress uninitialized variable warning
+
+	* README-binary: file deleted ; README has everything now.
+
+	* FILES-binary: Only one README file now.
+
+	* README: Updated for Makefile only, and include binary info.
+
+	* Makefile.in: Tidied it up and commented it.
+	Call with Win32=1 to compile under windows.
+
+	* make-release: more windows; and full release.
+
+	* make-release: good idea to include the binaries...
+
+	* make-release: windoze uses zip
+
+	* make-release: Cope with Windows, and add -norcs option.
+
+	* FILES-binary: don't include tiles-v1 in binary distribution
+
+	* make-release: if no RCS directory, build from existing files
+
+	* make-release: make static release only for linux
+
+	* Makefile.in: fbtiles now depends on Makefile, not Imakefile
+
+	* MANIFEST, FILES-src: add version.h
+
+	* make-release: Change from Imakefile to Makefile.in
+
+	* gui.c: rcs_id
+
+	* gui.h: include version.h
+
+	* gui-dial.c: version and rcs strings
+
+	* version.h: *** empty log message ***
+
+	* MANIFEST: Imakefile/Makefile changes
+
+	* FILES-src: delete Imakefile; add Makefile and Makefile.in
+
+	* Imakefile:
+	don't use imake; it's just too unlikely to be correctly installed.
+
+	* Makefile.in: *** empty log message ***
+
+	* make-release: use the make-release of the appropriate release
+
+	* MANIFEST, FILES-src: add makedep
+
+	* makedep: *** empty log message ***
+
+	* sysdep.c: make warn() add terminators intelligently
+
+	* controller.c, game.c: ANSIfication
+
+2001-01-20  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* sysdep.c: Numerous changes to accommodate Windows:
+	warn adds appropriate terminator.
+	headers included appropriately.
+	Socket routines redefined: use a type SOCKET, which in Windows
+	is provided, and in Unix typedef'd to int;
+	the error code is INVALID_SOCKET, not -1;
+	the routines can be given functions to use to transform sockets,
+	and to read/write/close the results (used by the gtk code);
+	Unix socket domain ifdef'd out for Windows;
+	get_line returns error if any read fails;
+	new routine to start background jobs;
+	Windows emulation for some Unix library routines.
+
+	* README: Change Windows stuff
+
+	* xmj.man: change --randomseats to --random-seats.
+	Change quick start to use xmj menu.
+
+	* controller.c:
+	type tidies; one or two leftovers of restructuring fixed.
+	Change --randomseats to --random-seats.
+	Allow - to mean stdout for logfile.
+
+	* client.c: use sysdep's close_socket to close.
+
+	* greedy.c: type and brace tidies
+
+	* gui.c: clear wall in appropriate places.
+	load two fonts and use appropriately.
+	type tidies.
+	In Windows, need to intercept sockets and turn them into glib
+	channels, and tell the socket routines to use appropriate functions to
+	access them.
+	display message while game suspended.
+	use sysdep's start_background_program instead of doing it in Unix.
+	use strerror instead of sys_errlist.
+	adjust_wall_loose() always returns a valid pointer (or
+	alternatively all uses of it would have to check; former was easier).
+
+	* gui-dial.c: Some type tidies.
+	Increased pbar_timeout interval to 50 ms.
+	Display a message while a game is suspended.
+	Fix bug in New Game dialog: wasn't matching button to sensitivity of
+	options.
+	Load the two fonts (fixed and big) in main routine, for use elsewhere.
+	Don't show Unix options in connect window when on Windows.
+
+	* gui.h: added global variables for the two fonts used
+
+	* sysdep.h: Numerous changes to accommodate Windows:
+	warn adds appropriate terminator.
+	headers included appropriately.
+	Socket routines redefined: use a type SOCKET, which in Windows
+	is provided, and in Unix typedef'd to int;
+	the error code is INVALID_SOCKET, not -1;
+	the routines can be given functions to use to transform sockets,
+	and to read/write/close the results (used by the gtk code);
+	Unix socket domain ifdef'd out for Windows;
+	get_line returns error if any read fails;
+	new routine to start background jobs;
+	Windows emulation for some Unix library routines.
+
+	* tiles.c: couple of type tidies
+
+2001-01-16  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Imakefile: a few tidies
+
+2001-01-14  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c: ansification
+
+	* controller.c:
+	restructured the connection book-keeping so that sockets are
+	no longer assumed to be small integers. (So things will work
+	on Windows.)
+
+	* sysdep.c, sysdep.h: checkpoint on the way to windows
+
+2001-01-13  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* protocol.h:
+	up the protocol version to 1010 to mark the change in kong/flower
+	rules (we now agree with the rest of the world in only allowing them
+	after drawing from the wall).
+
+	* game.c:
+	reinstate the old rule (allow kong etc after claiming discard)
+	for old protocol versions.
+
+2001-01-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* Imakefile: further warning fiddling
+
+	* proto-encode-msg.pl, controller.c, scoring.c, greedy.c: ansification
+
+	* tiles.c: remove superfluous ;
+
+	* gui.c: ansification
+
+	* tiles.c, tiles.h: change type of make_tile
+
+	* Imakefile: more vicious warning options.
+
+	* sysdep.h, gui.c, gui.h, player.c, controller.c, greedy.c:
+	prototype/static fixes.
+
+	* gui-dial.c: (a) prototype fixes
+	(b) wasn't using right function to close error messages.
+
+2001-01-06  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* greedy.c: tried to make evaluation of singletons better.
+	No effect, save to reduce scores a bit and slightly increase frequency
+	of winning. Time to stop fiddling.
+
+2001-01-05  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c:
+	on second thoughts, don't raise the scoring window at settlement.
+
+	* gui.c:
+	Raise the scoring info window on settlement, not on first score.
+	(This apparently makes it more friendly for Windows users.)
+
+	* gui-dial.c:
+	showraise also does a gtk_window_show to force uniconification.
+
+	* gui-dial.c:
+	Fix the progress bar timeout; stops the Mah-Jong claim window suddenly
+	disappearing!
+
+	* greedy.c:
+	This is as 10.9, but only considers changing strategy after drawing
+	from the wall. It gives a semi-significant improvement (1.8sd), mainly
+	by winning more frequently. It seems to get the concealed hand less
+	often.
+
+2001-01-04  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	stupid bug in score_hand meant that cannon detection was failing.
+	(was changing s, but left p over from previous s).
+
+	* greedy.c:
+	this has the supposedly better principle of working out the discard
+	before claiming. It didn't work well, so tried hiking expc penalty,
+	and explicitly banning discard of claimed tile.
+	After this, go back to previous, and try the simple fixes.
+
+2001-01-03  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* greedy.c: (a) restructured code, preparatory to changes.
+	(b) Put a small exposure penalty in the fast strategy.
+
+	* xmj.man: Document the new Connect menu.
+
+	* runtest: add --no-special-scores to server options.
+
+	* xmj.man:
+	Add the mj-server no-special-scores option to suppress flower/season scores.
+
+	* controller.c:
+	Add the no-special-scores option to suppress flower/season scores.
+
+	* scoring.h, scoring.c:
+	Add the no_special_scores variable to suppress flower/season scores.
+
+	* greedy.c: change concealed partchow to match others. Seems to make no
+	difference.
+
+2001-01-02  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* runtest:
+	put evals into the player execution commands so that redirections
+	can be included.
+
+2001-01-01  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* greedy.c:
+	(a) Only switch to fast when opponent displays four sets (not three).
+	    Not very significant (1sd), but seems harmless.
+	(b) remove old stuff.
+
+	* greedy.c:
+	Various fixes to response logic so that it doesn't try to do things
+	twice.
+
+	* game.c:
+	Amazingly enough, game_handle_cmsg was in most cases not actually
+	returning the correct affected id.
+
+	* greedy.c:
+	Don't claim mah jong on a concealed hand if we still have a reasonable
+	chance of picking up the tile. (Need to take account of the number
+	of tiles left to make this more accurate.)
+	This does about 1.8 sd better than 10.4.
+
+	* greedy.c: correct erroneous comments
+
+2000-12-31  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.h, gui.c, gui-dial.c:
+	Basic new game panel now working. Now tidy it, capturing
+	children diagnostics etc.
+
+	* sysdep.h, sysdep.c:
+	connect_to_host: mark the connection close on exec.
+
+	* gui-dial.c:
+	checkpoint: added fields etc to open panel for starting game.
+
+2000-12-30  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* greedy.c: remove the easy switch back to default; treat as others.
+
+2000-12-29  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* runtest: put date in results file
+
+	* game.c: set discard_serial to one, as the controller did.
+
+	* controller.c:
+	controller was doing things that should have been done by processing
+	a newhand message. There's still more to do on this.
+
+2000-12-27  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* game.c: Set info.whence to FromWall at start of play.
+
+	* greedy.c: trying to avoid scoring pairs in chow hands
+
+	* greedy.c:
+	make kong declaring rules match M: only after drawing from wall.
+
+	* greedy.c: trying to avoid scoring pairs in chow hands
+
+2000-12-26  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c: State saving is broken, so don't try to do it.
+
+	* xmj.man, controller.c: Add  --exit-on-disconnect  server option.
+
+	* gui-dial.c: add an "about" window.
+
+	* xmj.man, scoring.c: Cut bouquets down to one double.
+
+2000-12-25  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* ChangeLog: update; strip out stuff before the pre-release.
+
+	* game.c: CMsgSpecialSetMsg wasn't adding the discard when checking for
+	existence of the set!
+
+	* gui-dial.c: Use new tilesetbox_init function.
+
+	* gui.c: Several changes to fix robbing kong bugs:
+	(1) use new tilesetbox_init function to create all widgets in
+	    initialization, rather than on the fly; associated changes to
+	    tilesetbox_set;
+	(2) playerdisp_update_exposed must be able to handle a closed kong
+	    being robbed;
+	(3) when forming a special set, the destination tile is found in
+	    the concealed tiles, not the exposed.
+
+	* gui.h:
+	Stripped func out of tilesetbox, and added tilesetbox_init function.
+
+	* game.c: allow closed kong robbing for thirteen wonders
+
+	* xmj.man: clarifications
+
+	* xmj.man:
+	make kong declaring rules match M: only after drawing from wall.
+
+	* game.c:
+	Make rules match the rest of the world: specials and kongs can
+	only be declared after drawing a tile from the wall, not after
+	taking a discard.
+
+2000-12-23  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* controller.c:
+	The send_infotiles function was sending the message to all players
+	depending on the option of the affected player, instead of depending
+	on their own option setting.
+
+2000-12-21  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* xmj.man: fix some slips in option argument typog
+
+	* gui.c: showwall should start undetermined
+
+2000-12-20  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui-dial.c:
+	fix the radio group functionality in the concealed buttons.
+	This is not concurrency-safe: it relies on induced callbacks being executed
+	synchronously. I should fix this.
+
+2000-12-17  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* gui.c: clear discards on game over
+
+2000-12-14  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* make-release: replace - by _ in symname
+
+	* index.html: update for beta release
+
+2000-12-07  Julian Bradfield  <jcb@dcs.ed.ac.uk>
+
+	* stats, runtest, logstats: increase version to 10 for post release
+
+	* xmj.man, tiles.h, tiles.c, sysdep.h, sysdep.c, scoring.h, scoring.c, protocol.h, protocol.c, proto-encode-msg.pl, proto-decode-msg.pl, player.h, player.c, mj-server.man, mj-player.man, maketxt, makefallbacktiles, make-release, make-enums.pl, gui.h, gui.c, gui-dial.c, greedy.c, game.h, game.c, controller.h, controller.c, client.h, client.c, README-binary, README, MANIFEST, LICENCE, Imakefile, FILES-src, FILES-binary:
+	1.0 pre-release
+
+[ removed older stuff ]

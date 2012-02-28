@@ -1,0 +1,147 @@
+$Header: /home/jcb/MahJong/newmj/RCS/MANIFEST,v 12.0 2009/06/28 20:43:12 jcb Rel $
+
+Files in this directory:
+
+CHANGES
+ User-visible changes between releases.
+
+ChangeLog
+ Change log entries from the code.
+
+LICENCE
+ Licensing information.
+
+MANIFEST
+ This file.
+
+Makefile.in
+ Master make file.
+
+Makefile
+ Copy of Makefile.in with dependencies added.
+
+sysdep.h
+ Miscellaneous system functions.
+
+tiles.h
+ Declares the tile datatype and access functions.
+ At present it also contains some of the implementation, which 
+ is done by macros; but of course nobody's supposed to
+ know that.
+
+tiles.c
+ Contains the other tile access functions.
+
+player.h
+ Contains datatypes representing players and functions on them.
+
+player.c
+ Functions concerned with players.
+
+protocol.h
+ Defines the messages passed between players and the controller.
+
+protocol.c
+ Implements conversion between API and wire protocol.
+
+proto-encode-msg.pl
+ Auxiliary script.
+
+proto-decode-msg.pl
+ Auxiliary script.
+
+make-enums.pl
+ Utility to generate enum parsing and printing functions.
+
+makedep
+ A makedepend variant.
+
+makefallbacktiles
+ Auxiliary script.
+
+makefile.msvc.old
+ See the README file. Concerns Windows users only.
+
+malloc.c
+ Doug Lea's malloc implementation, slightly cut down, for Windows.
+
+game.h
+ Headers for game data structure and functions.
+
+game.c
+ Functions on games.
+
+controller.h
+ Headers for controller.c
+
+controller.c
+ The master controller program.
+
+scoring.h
+ Headers for scoring routines.
+
+scoring.c
+ Routines for scoring.
+
+client.c
+ client support routines
+
+client.h
+ and headers
+
+gtkrc.h
+ Contains some gtkrc information as strings for use by xmj.
+
+greedy.c
+ A programmed player with simple offensive strategy.
+
+gui.c
+ The graphical user interface.
+
+gui.h
+ Header file for gui.
+
+gui-dial.c
+ Dialog box functions for gui
+
+lazyfixed.h
+lazyfixed.c
+vlazyfixed.h
+vlazyfixed.c
+ These implement two slight modifications of the GTK+ fixed widget for
+ use in the gui.
+
+version.h
+ Version strings.
+
+fallbacktiles/
+ Directory containing pixmaps with tile letters on them.
+
+tiles-v1/
+ Directory containing the pixmaps for the tiles.
+
+tiles-numbered/
+ An alternative tileset in which the characters and winds are numbered
+ for those who haven't learned the Chinese characters yet.
+ (Supplied by Gary Wong.)
+
+tiles-small/
+ A smaller tileset -- this the standard (tiles-v1) set, but shrunk
+ by 25%.
+
+icon.ico
+iconres.rs
+ Files to give xmj an icon under Windows.
+
+gtkrc-minimal
+gtkrc-plain
+gtkrc-clearlooks
+ Sample gtkrc files matching the compiled-in themes.
+
+xmj.man
+mj-server.man
+mj-player.man
+use.txt
+rules.txt
+ User documentation.
+

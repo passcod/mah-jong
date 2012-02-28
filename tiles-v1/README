@@ -1,0 +1,18 @@
+Most of tile pixmaps in this directory derive from the pixmaps distributed
+with the old xmahjongg solitaire game.
+
+The tiles were originally black and white, produced by Mark A. Holm,
+subject to a "non-profit only" licence.
+
+The coloured versions were produced by Eddie Kohler, and in so far as
+they are different works (a debatable point, I think), are distributed 
+under the Gnu General Public License Version 2 or later, which may be
+found in the file GPL.
+
+The files have been renamed, one pixel of border trimmed off, and a
+change made to the 7 Circle.
+
+Only the suit and honour tiles are covered by this; the flowers and
+seasons are by J. C. Bradfield (based on a real tile set) and are
+placed in the public domain.
+

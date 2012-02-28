@@ -1,0 +1,948 @@
+    xmj, mj-server, mj-player - programs for playing Mah-Jong
+
+SYNOPSIS
+--------
+
+  xmj  [ --id  IDNUMBER]
+     [ --server  ADDRESS]
+     [ --name  PLAYERNAME]
+     [ --connect ]
+     [ --show-wall  |  --no-show-wall ]
+     [ --size N ]
+     [ --animate |  --no-animate]
+     [ --tileset  DIRECTORY]
+     [ --tileset-path  DIRECTORY-PATH]
+     [ --dialogs-popup  |  --dialogs-below  |  --dialogs-central ]
+     [ --use-system-gtkrc  |  --no-use-system-gtkrc ]
+     [ --gtk2-rcfile  FILE]
+     [ --echo-server ]
+     [ --pass-stdin ]
+     [ --monitor ]
+
+  mj-server  [ --server  ADDRESS]  [ --timeout  SECONDS]
+     [ --pause  DECISECONDS]
+     [ --random-seats | --id-order-seats ]
+     [ --disconnect-penalties  N1,N2,N3]
+     [ --end-on-disconnect ]
+     [ --exit-on-disconnect ]
+     [ --save-on-exit ]
+     [ --option-file  FILE]
+     [ --load-game  FILE]
+     [ --no-id-required ]
+     [ --no-manager ]
+     [ --auth-basic  ID:PASSWORD]*4
+     [ --debug ]
+     [ --logfile  FILE]
+     [ --no-special-scores ]
+     [ --seed N ]
+     [ --wallfile  filefP]
+     [ --hand-history ]
+     [ --nohist ]
+
+  mj-player  [ --id  IDNUMBER] [ --name  PLAYERNAME]
+     [ --server  ADDRESS] [ --password  PASSWORD]
+      [STRATEGY OPTIONS]
+    
+
+DESCRIPTION
+-----------
+A set of three programs to play Mah-Jong on Unix systems, against
+people or programs, over the Internet.
+
+  mj-server 
+    is the program that handles communications and control of
+    the game; the rules and scoring are enforced there. Players, human or
+    computer, connect to a server via the network.
+
+  mj-player 
+    is a computer player. At present, it is fairly simplistic, 
+    having only offensive tactics with no knowledge of defensive play.
+
+  xmj 
+    is the X client for human players.
+    
+
+QUICK START
+-----------
+If you don't want to read this long document: to start a game against
+three computer players, start  xmj , select "New local game..." from the 
+"Game" menu, and click "Start Game". (Wait about ten seconds for
+everything to start up.)
+
+
+OPTIONS
+-------
+
+All Programs
+------------
+
+  --server  ADDRESS
+    specifies the network address to listen on (for  mj-server ) or to
+    connect to (for  mj-player  and  xmj ).
+    If ADDRESS contains a colon, it specifies an Internet socket, and
+    should have the form HOST:PORT . If ADDRESS does not contain a colon, it 
+    is interpreted as a Unix file name and a Unix socket is used.
+    The default value for ADDRESS is  localhost:5000 .
+    ADDRESS can also be set in a dialog box in  xmj .
+    
+xmj and mj-player
+-----------------
+
+  --id  IDNUMBER
+    The server assigns a unique integer ID (which is currently just 1 to 4 
+    in order of connection) to each player. This ID should be quoted when
+    reconnecting to a game in progress (after, for example, losing a
+    network connection or accidentally killing  xmj ). The default ID
+    is 0, which denotes no pre-assigned ID. 
+
+  --name  NAME
+    Players can give themselves names which will be used by client
+    programs. This option specifies the name. For  xmj , the default
+    is the value of the environment variable LOGNAME, or failing that the
+    username of the logged in user. For  mj-player , the default is
+    "Robot(PID)" where PID is the process id.
+    
+xmj
+---
+
+  --connect 
+    By default,  xmj  does not automatically connect to a server,
+    but waits for the user to connect via a menu. If this option is
+    specified,  xmj  immediately connects.
+
+  --show-wall 
+  --no-show-wall 
+    Tells  xmj  (not) to display the wall. By default, the wall is shown
+    only if running on a big enough screen. This option is also
+    controllable via the Display Options preference panel.
+
+  --size  NUMBER
+    This option adjusts the size of the main window. It should be thought
+    of as the length of a tile rack, measured in tiles. The default, and
+    the largest value accepted, is 19, or 18 if on an 800x600 display. The
+    smallest usable value is 14. This option is also controllable via the
+    Display Options preference panel.
+    If the  --show-wall  option is given, a  --size  smaller than 19 will
+    have no effect.
+
+  --animate 
+  --no-animate 
+    This option switches on (off) some animation. Not all tile movements
+    are animated: only those that involve moving tiles to or from
+    a hand from outside. This option is also controllable via the 
+    Display Options preference panel.
+
+  --tileset  DIRECTORY
+    xmj  needs pixmaps to display the tiles and the tong box.
+    This option tells it which directory to find them in.
+    The default is set at compilation time; the default default
+    is to use the compiled-in tiles.
+
+  --tileset-path  DIRECTORY-PATH
+    This gives a colon-separated (or semicolon-separated under Microsoft
+    Windows) list of directories in which to look for the directory named
+    by the  --tileset  option.
+
+  --dialogs-popup 
+    By default, most of the dialog boxes for player actions are
+    part of the main window. If this option is used, they will
+    instead appear as separate transient windows.
+
+  --dialogs-below 
+    By default, dialog boxes appear in the centre of the table.
+    If this option is given, dialogs (apart from some popups) 
+    are positioned below the table area. Please let me know
+    which style you prefer!
+
+  --dialogs-central 
+    The default: dialog boxes appear in the middle of the table.
+    These options are also controllable via the Display Options
+    preference panel.
+
+  --gtk2-rcfile  FILE
+    If xmj is compiled with GTK+2, this option specifies a GTK rc file to
+    be used instead of the program's compiled-in style file. This may be
+    used to change the appearance of the program. See description under
+    the Display Options... panel for more details. The FILE should
+    be an absolute filename; if it is relative, it will be sought in the
+    current directory (Unix) or the program directory (Windows). This
+    option is also controllable via the Display Options preference panel.
+
+  --use-system-gtkrc 
+  --no-use-system-gtkrc 
+    When xmj is compiled with GTK+2, by default it ignores the system
+    provided settings, to ensure a consistent behaviour across systems.
+    If you wish it to use your system settings, set this option.
+    This option is also controllable via the Display Options preference panel.
+
+  --echo-server 
+    If this option is given,  xmj  will echo to  stdout  all the
+    protocol messages received from the server. This option is for use
+    in debugging.
+
+  --pass-stdin 
+    If this option is given,  xmj  will send any text given on stdin
+    to the server. This option is for use in debugging.
+
+  --monitor 
+    If this option is given,  xmj  will send requests to the server only
+    in direct response to user actions; it will take no action itself (and
+    hence all auto-declaring and playing is also disabled). This option is
+    for use in debugging.
+    
+mj-server
+---------
+
+  --timeout  SECONDS
+    When a discard is made, there is a limit on the time players have
+    to claim it. This option sets the timeout; a value of
+    zero disables it. The default is 15 seconds.
+    This value can also be set via a GameOption request from a player.
+
+  --pause  DECISECONDS
+    This will make the server enforce a delay of DECISECONDS/10
+    seconds between each action in the game; the purpose is to slow
+    programmed players down to human speed (or, in a teaching situation,
+    to slow the game even more). The current server considers that 50
+    (i.e. 5 seconds) is the maximum reasonable value for this option.
+    The option can also be requested by players, via a PlayerOption
+    protocol request.
+
+  --random-seats 
+    By default, players are seated in order of connection to the
+    server. This option seats them randomly. It will become the
+    default later.
+
+  --id-order-seats 
+    This option causes the players to be seated in numerical order of
+    their ids. It is used by the xmj program to make the New local game..
+    work as expected.
+
+  --disconnect-penalties  N1,N2,N3
+    This specifies the penalties applied by the following option for
+    players who disconnect before the end of a game. N1 is the
+    penalty for disconnecting in the middle of a hand; N2 at the end
+    of a hand but in the middle of a round; N3 at the end of a round
+    (other than end of game). They all default to 0 if not specified.
+
+  --end-on-disconnect 
+    If this option is given, a disconnection by one player will gracefully
+    terminate the game. Mid-hand, the hand is declared a wash-out; after
+    Mah-Jong has been declared, then if a losing player disconnects, their
+    tiles are shown, the hand is scored, and then the game ends; if a
+    winning player disconnects, the hand is a wash-out. The disconnecting
+    player may be assigned a penalty, according to the
+    --disconnect-penalties  option, which will be included in the
+    scores printed out by the server. (The penalties will not be visible
+    to the other players.)
+
+  --exit-on-disconnect 
+    If this option is given, the server will quit if any player
+    disconnects, rather than waiting indefinitely for reconnection.
+
+  --save-on-exit 
+    If this option is given, the server will save the state of the game
+    if it quits as a result of a player disconnecting. (It will not save
+    the state if it quits as the result of an internal error.)
+
+  --option-file  FILE
+    This names a file of protocol commands which will be applied to every
+    game when it starts. Its main purpose is to set non-default game
+    options, via the GameOption protocol message (note that this is a
+    CMsg, not a PMsg). However, users will normally set options and
+    preferences via the  xmj  control panel, not by this means.
+
+  --load-game  FILE
+    This names a file containing a saved game (as a suitable sequence of
+    protocol commands). The server will load the game; clients connecting
+    will be treated as if they had disconnected and rejoined the game.
+
+  --no-id-required 
+    In the most common case of resuming a saved game, namely one human
+    playing against three robots, the robots will not have the same names
+    or ids as the robots in the original game. This option tells the
+    server that if it cannot match a reconnecting player by id or name,
+    it should anyway match it to one of the previously disconnected
+    players. (In this case, the human normally connects first with the
+    same name, so is correctly matched.)
+
+  --no-manager 
+    Usually, the first player to connect becomes the game manager, and
+    can change all the game settings. If this option is given, no player
+    will be allowed to change the game settings.
+
+  --auth-basic  ID:PASSWORD
+    This provides basic (insecure, since the password is transmitted in
+    plaintext) authorization: the player with id ID must give the
+    specified password to connect. Note that if this argument is given, it
+    must be given four times, once for each authorized player - any player
+    id not mentioned will not be allowed to connect. A player may be
+    allowed to connect without a password by making PASSWORD empty.
+
+  --debug 
+    This enables various debugging features. In particular, it
+    enables protocol commands that allow one to change the tiles
+    in a hand...
+
+  --logfile  FILE
+    The server will write a complete record of the game to FILE;
+    this will be quite large, and is only useful for automatic comparison of
+    different computer players.
+
+  --no-special-scores 
+    This option suppresses the scoring of points and doubles for flowers
+    and seasons. It is primarily intended for running tests of different
+    players; for human use, a game option will be provided to eliminate
+    the specials altogether.
+
+  --seed  N
+    This option specifies the seed for the random number functions.
+    Used for repeatable tests.
+
+  --wallfile  FILE
+    This names a file containing space separated tile codes giving the
+    wall; used for repeatable tests. (This is a testing option; it is
+    not robust.)
+
+  --hand-histor 
+    This is an option to facilitate certain automatic analyses; if set, 
+    a history of each hand is dumped to the file hand-NN.mjs .
+
+  --nohist 
+    Another option only used in automatic comparison: this saves some
+    CPU time by disabling the book-keeping required to allow players
+    to disconnect and reconnect.
+    
+mj-player
+---------
+
+  --password  PASSWORD
+    sets the password if basic authorization is in use.
+
+  STRATEGY OPTIONS
+    The player has some options which can be used to change its
+    "personality". The meanings are rather approximate, since they
+    actually change parameters which are used in a rather complex way, but
+    the idea is right. These options, each of which takes a floating point
+    value in the given range, are:
+
+  --chowness  -1.0 .. 1.0
+    This affects how much the player likes chows: at 1.0, it will go all
+    out for the chicken hand, at -1.0 it will never chow. The default is
+    0.0.
+
+  --hiddenness  0.0 .. 1.0
+    Increasing this makes the player reluctant to make exposed sets. At 1.0, it
+    will never claim (except possibly to go mah-jong). The default is 0.0.
+
+  --majorness  0.0 .. 1.0
+    Increasing this biases the player towards collecting major tiles. At
+    1.0, it will discard all minor tiles, if possible. The default is 0.0.
+
+  --suitness  0.0 .. 1.0
+    Increasing this makes the player try to go for one-suit hands. The
+    default is 0.0
+
+In practice, the  --majorness  option seems not to be very useful,
+but the other options change the personality without completely
+destroying the playing ability.
+
+In fact, all these options take a comma-separated list of values,
+which allows the specifications of a set of strategies, which the
+player will switch between. In this case, the --hysteresis
+HHH option specifies how much better a strategy should be to
+switch to it. However, use of this option, and multiple strategies, is
+probably only useful if you first read the code to see how it works.
+
+
+USING THE XMJ PROGRAM
+---------------------
+The main window contains a menu-bar and a table area; the table is
+in a tasteful shade of dark green. The table displays a stylized
+version of the game: stylized in that there is no jazzy graphics or
+perspective, and the tiles are not intended to be pictures of real
+objects, and so on. Otherwise, the layout is as one would expect of a
+real game. However, the wall may or may not be displayed, depending on
+option settings and screen size. (See above.)
+
+Specifically, the four players are arranged around the four edges of
+the table, with "us" at the bottom. For each player, the concealed
+tiles are displayed nearest the edge of the table; our own tiles are
+visible, the other players' tiles are face-down.
+In front of the concealed tiles are (to the player's left) any
+declared sets, and (to the player's right) flowers and seasons, and
+the tong box if the player is East. The tong box displays the wind of
+the round in a white circle. If necessary, the flowers and seasons
+will overflow into the concealed row.
+
+The discards are displayed face-up in the middle of the board: they
+are laid down in order by each player, in the natural
+orientation. TODO: add options to display discards randomly, or
+face-down.
+If animation (see  --animate  option) is not being used, then the
+most recent discard will be highlighted in red.
+
+The name of a face-up tile can be displayed by right-clicking in the
+tile. Alternatively, the Tiletips display option can be set, in which
+case the name of a tile is displayed whenever the mouse enters it.
+
+Our tiles are displayed in sorted order, which happens to be
+Bamboos (1-9), Characters (1-9), Circles (1-9), Winds (ESWN),
+Dragons (RWG), Flowers, Seasons. We can also arrange the
+tiles ourselves - see the "Sort tiles in hand" display preference
+described below.
+
+
+
+Actions are generally carried out by clicking a button in a dialog box 
+that appears in the middle of the board. For many actions, a tile must 
+be selected. A tile is selected or unselected by single-clicking it;
+when selected, it appears as a depressed button.
+The program will generally pre-select a sensible tile:
+specifically:
+during the initial declaration of special tiles, the rightmost
+special is selected;
+after we draw a tile from the wall, the drawn tile is selected;
+when declaring concealed sets after going Mah Jong, the first
+undeclared tile is selected.
+
+To describe the possible actions, let us run through the course of a
+game.
+
+First select "New local game..." from the "Game" menu. A panel will
+appear. The default options are to play a game against the computer,
+so click "Start Game". 
+After a second or two, a game will start. (NOTE: this assumes correct
+installation. If this fails, start a server and players manually, and
+use the "Join server..." menu item.)
+
+The first thing that happens is a dialog box "Ready to start next
+hand".  The server will not start playing a hand until all players
+have indicated their willingness to continue play.
+
+Next, the tiles are dealt. Then each player in turn is expected to
+declare flowers and seasons. When it is our turn, a dialog will appear 
+with the following buttons:
+
+  Declare
+    declare the selected flower or season. (Note: the
+    program auto-selects the rightmost special tile.)
+    If no tile is selected, this finishes declarations.
+    This button will not appear if the game is being played without
+    flowers and seasons.
+
+  Kong
+    If we have a concealed kong, we can declare it now with
+    this button.
+
+  Finish
+    Finish declaring specials and kongs.
+
+When all players have finished declaring specials and kongs, a dialog
+box appears, asking (on East's behalf) permission to continue.
+
+During play, when we draw a tile from the wall, it will be
+auto-selected. We may also of course select a different tile.
+A dialog will appear giving us the following possibilities:
+
+  Discard
+    discard the selected tile. This button also serves
+    to declare a flower or season, and the label changes to "Declare"
+    when one is selected.
+
+  &Calling
+    discard the selected tile and declare a calling hand.
+    This button is only shown when calling is allowed
+    (by default, only Original Call is allowed).
+
+  Kong
+    declare a concealed kong of the selected tile, or
+    add the selected tile to an exposed pung, as appropriate.
+    Note:  In most rules, a concealed kong can only be declared (or a tile
+    added to an existing pung) immediately after drawing from the wall,
+    but not after claiming somebody else's discard. Up to and including
+    version 1.10, the server enforced this rule strictly. As from version
+    1.11, it allows a tile to be added to a pung that you have just
+    claimed: in real life, this corresponds to correcting your Pung! claim
+    to a Kong! claim, which is allowed by all rules. (Obscure note: if you
+    are playing the KongHas3Types option, the resulting kong will be
+    counted as annexed, instead of the exposed kong that would have
+    resulted from a genuine change of claim. This is a bug, but not worth
+    the trouble of fixing.)
+
+  Mah Jong!
+    declare Mah Jong! (no selection needed)
+
+If the wall is not being shown, the dialog will note the number
+of tiles left in the live wall.
+
+A tile can also be discarded simply by double-clicking it.
+
+When another player discards, a dialog appears to allow us to claim
+it. If the dialogs are in the middle of the table, the dialog displays
+the tile in a position and orientation to indicate the player who discarded;
+if the dialogs are at the bottom, this is not done, to save space.
+In any case the dialog displays the name of the tile, and buttons
+for the possible claims.
+If the wall is not being shown, the dialog will note the number
+of tiles left in the live wall.
+There is also a `progress bar' which shows how time is running out.
+The buttons use one variant of traditional English terminology, viz:
+
+  No claim
+    we don't claim this tile. If there is no timeout in
+    operation, it is necessary to click this to indicate
+    a "pass", and in any case it is desirable to speed up
+    play.
+
+  Chow
+    claim for a sequence.
+    If our claim is successful and there is more than one
+    possible sequence to be made, a dialog will appear asking
+    us to specify which one.
+
+  Pung
+    claim for a triplet.
+
+  Kong
+    claim for quadruplet.
+
+  Mah Jong!
+    claim for Mah Jong.
+    If the claim succeeds, a dialog box will appear asking
+    whether we want the tile for "Eyes", "Chow", "Pung", or a
+    "Special Hand" (such as Thirteen Unique Wonders).
+    (The term "Eyes" is used instead of "Pair" so that in the
+    keyboard accelerators, E can be used, leaving P for "Pung".)
+
+When a player (including us) claims, the word "Chow!" etc. will appear
+(in big letters on a yellow background, by default) for a couple of seconds
+above the player's tiles.
+
+When all players have claimed, or timed out, the successful claim is
+implemented; no additional announcement is made of this.
+
+If a player adds a tile to an exposed pung, and that tile would give
+us Mah Jong, then a dialog box pops up to ask whether we wish to rob the kong.
+
+After somebody goes Mah Jong, we are asked to declare our concealed
+sets. A dialog appears with buttons for "Eyes", "Chow", "Pung". To declare a
+set, select a tile, which must be the  first  tile in the set for a
+chow, and click the appropriate button. (If we are going Mah Jong, the
+first undeclared tile is auto-selected.) When finished, click "Finished" to
+reveal the remaining tiles to the other players. 
+If we are the winner, there will be a button for "Special Hand": this is 
+used to declare hands of non-standard shape, such as Thirteen Unique
+Wonders. (Note: the Seven Pairs hand, if in use, should be declared
+by means of the "Eyes" button, not the "Special Hand" button.)
+
+At this point, a new top-level window appears to display the scoring
+information. The scoring is done entirely by the server, not by the
+players; the server sends a text description of the score calculation, 
+and this is displayed for each player in the Scoring window. 
+The information in the Scoring window remains there until the next
+hand is scored; the window can be brought up at any time via the
+"Show" menu.
+
+Finally, the "continue with next hand" dialog appears. The hand just
+completed will remain visible on the table until the next hand starts.
+
+
+Keyboard Accelerators 
+There are keyboard accelerators for all the actions in the course of
+play. For selecting tiles, the Left and Right arrow keys can be used
+to move the selection left or right along the row of tiles. In all
+dialogs, Space or Return will activate the shadowed button, which is
+usually the commonest choice. Each button can also be activated by
+typing the underlined letter. (In the Windows GTK1 build, use l (ell)
+and r instead of Left and Right. The button accelerators do not work,
+for reasons unknown to me.)
+The menus are also accessible via accelerators. To open a menu, 
+press Meta-X (Alt-X on Windows), where X is the underlined letter in
+the menu name. (Meta-X is often (confusingly) Alt-X on Linux systems.)
+Then each entry has an underlined letter which if pressed will activate it.
+
+
+An additional top-level window showing the state of the game can be
+obtained by selecting "Game info" from the "Show" menu.
+
+There is also a facility for sending text messages to the other
+players. Select "Messages" from the "Show" menu, and a window will
+appear: in the top is a display of all messages sent, and below
+is a single line in which you can enter your message. It will be
+sent when you hit Return. The message window pops up automatically 
+whenever a message is received, unless prevented by a display
+preference. If the "Display status and messages in main window"
+display option is set, then this window will instead appear in the
+main window, above the table. In that case, there is a checkbox 
+"Keep cursor here" next to the message entry line. Checking this box
+will ensure that the keyboard focus stays in the message entry field,
+even when you click on buttons in the game. (Consequently, you will be
+unable to use keyboard accelerators while this option is checked.)
+
+Starting games and re-connecting
+--------------------------------
+The "Game" menu has the "New local game..." item to start a new game
+on your local computer, and the "Join server..." item to connect to an
+existing game. The dialogs for both these have the following entries:
+
+  Checkboxes for Internet/Unix server
+    These specify whether the server is listening on an Internet socket
+    or a Unix socket. If an Internet (TCP) socket, the host name ("Join
+    Game..." only) and port number should be entered in the appropriate
+    boxes; if a Unix socket, the file name of the socket may be entered,
+    or if it is left blank, a temporary file will be used.
+    These fields are remembered from game to game.
+
+  "Player ID" and "Name" fields
+    The "Player ID" should be left at 0, unless reconnecting to an
+    existing game, in which case it should be the ID assigned by the
+    server on first connecting to that game. The "Name" field can be
+    anything. When reconnecting to an existing game, if the ID is given as 
+    0, the server will try to use the "Name" to identify the player. (This
+    may not be true in future.) The "Name" field is remembered from game
+    to game.
+
+The "Join server..." dialog then simply has a "Connect" button
+to establish the connection. The "New local game..." has the following
+fields:
+
+  For each of three further players,
+    A checkbox to say whether to start a computer player. (Some of) these
+    should be unchecked if you wish other humans to join the games.
+    If checked, there is a text entry to set the players' names, and a
+    text entry field in which options can be given to the players; the
+    latter should only be used if you understand the options! The options
+    are remembered from game to game.
+
+  An "allow disconnection" checkbox
+    If this is checked, the server that is started will continue to run
+    even if players disconnect. If it is not checked, the server will quit 
+    if any player disconnects. If you are playing one against the
+    computer, this should generally be left unchecked, in order to avoid
+    server processes accidentally being left lying around. If playing
+    against people, it should be checked, to allow players to go away, or
+    to guard against network outages.
+
+  As "save game state on exit" checkbox
+    If this is checked, the server will save the game state (see below on
+    on saving and resuming games) when a player disconnects and causes it
+    to quit.
+
+  A "seat players randomly" checkbox
+    If this is left unchecked, players will be initially seated as East,
+    South, West, North in order of connection. (We always connect first.)
+    If it is checked, the seating will be random.
+
+  A numeric entry field
+    to specify the time limit for claiming discards.
+    If set to 0, there will be no time limit.
+
+  A button to start the game
+    Note that it takes a few seconds to start a game, during which time
+    the dialog stays up with the button pressed. (TODO: fix this!)
+    
+Saving and resuming games
+-------------------------
+At any time during the play of a game, you can choose the "Save" entry
+from the "Game" menu. This causes the server to save the current state
+of the game in a file. The file will be named  game- DATE .mjs  by
+default; if a name has previously been specified, or if the game was
+resumed from a file, that name will be used. To specify a name, use
+the "Save as..." entry in the "Game" menu. Note that for security,
+directories cannot be specified (except by resuming a game), so the
+file will be created in the working directory of the server.
+
+To resume a saved game, use the "Resume game..." entry from the "Game"
+menu. This is just like the "New local game..." panel, but it has a box to
+specify the file containing the saved game. At present, you must type
+the name of the file into this box. TODO find a file selector widget
+for this.
+
+Setting display and game options
+--------------------------------
+The "Options" menu of  xmj  brings up panels to set various
+options related to the display and to the game rules.
+Most of these options can be stored in the preferences file,
+which is  .xmjrc  in your home directory on Unix, and  xmj.ini 
+in your home (whatever that means) directory on Microsoft Windows.
+
+Display Options
+---------------
+This panel controls options related to the local display.
+At the bottom are three buttons: "Save & Apply" applies changes and
+saves them in the preferences file for future sessions; "Apply (no
+save)" applies any changes, but does not save them; "Cancel" ignores changes.
+Note that many display options can also be controlled by command-line
+arguments; if an option is specified both in the preferences file and
+on the command line, the command line takes priority.
+
+  Position of action dialogs.
+    This determines where the dialogs for user actions in the game are
+    popped up; see the description of the  --dialogs-central  etc.
+    options above. This option is stored in the preferences file as
+    Display DialogPosition POSN
+    where POSN is one of "central", "below" or "popup".
+
+  Animation
+    determines whether tile movements are animated (see the  --animate 
+    option above). This option is stored in the preferences file as
+    Display Animate BOOL
+    where BOOL is "0" or "1".
+
+  Display status and messages in main window
+    puts the game status and message (chat) windows in the main window,
+    above the table, instead of having separate popup windows. This option
+    is stored in the preferences file as 
+    Display InfoInMain BOOL
+    where BOOL is "0" or "1".
+
+  Don't popup scoring/message windows
+    will prevent the automatic popup of the scoring window at the end of
+    a hand, the message window on the arrival of a message, and the game
+    status window at the end of the game. This option is stored in the preferences file as
+    Display NoPopups BOOL
+    where BOOL is "0" or "1".
+
+  Tiletips always shown
+    means that the name of a tile is displayed whenever the mouse enters
+    it, and the name of the selected tile is always shown. (Otherwise,
+    right-click to display the name.) This option is stored in the
+    preferences file as
+    Display Tiletips BOOL
+    where BOOL is "0" or "1".
+
+  Display size
+    This drop-down list specifies the size of the display. The size should
+    be thought of as the length of a tile rack. This is only relevant if
+    the wall is not being displayed. Values range from 14 to 19; if
+    "(auto)" (the default) is specified, the client tries to choose a size
+    as big as will fit in the display. This option can also be specified
+    by the command line  --size  argument. This option is stored in the
+    preferences file as 
+    Display Size N
+
+  Show the wall
+    "always" is equivalent to the  --show-wall  option; "never" is
+    equivalent to the  --no-show-wall  option; and "when room" is the
+    default. This option is stored in the preferences file as
+    Display ShowWall WHEN
+    where WHEN is one of "always", "when-room" or "never".
+
+  Sort tiles in hand
+    By default, the program maintains your own tiles in sorted order.
+    If you prefer to leave them unsorted (which is often recommended in
+    real life, to avoid giving information to your opponents), or to
+    arrange them yourself, you can set this option to "never", or to "on
+    deal" if you want them to be sorted at the beginning, but then left
+    alone. To rearrange tiles, use the Shift-Left and Shift-Right
+    (i.e. the left and right arrow keys while holding Shift) - these move
+    the selected tile left or right in your hand. (In the Windows GTK1
+    build, use L (Shift-l) and R (Shift-r) instead.) On GTK2 builds, you
+    can also drag a tile to its new position with the mouse.
+    This option is stored in the preferences file as
+    Display SortTiles WHEN
+    where WHEN is one of "always", "deal" or "never".
+
+  Iconify all windows with main
+    If this option is set (the default), then when the main xmj window is
+    iconified, (almost) all other open windows such as dialogs will also
+    be iconified; when the main window is uniconified, the other windows
+    will also be uniconified. If it is not set, all windows are
+    independent of one another. This option is stored in the preferences file as 
+    Display IconifyDialogs BOOL
+    This option is not currently supported under Microsoft Windows.
+
+  Tileset
+    this is the tile pixmap directory, also given by the  --tileset 
+    option. This option is stored in the preferences file as
+    Display Tileset DIRNAME
+
+  Tileset Path
+    this is the search path for tileset directories, also given by the
+    --tileset-path  option. This option is stored in the preferences
+    file as 
+    Display TilesetPath SEARCH-PATH
+
+  Main font selection...
+    This button brings up a font selection dialog to choose the font
+    used in buttons, menus, etc. in the client. This option is stored in
+    the preferences file as 
+    Display MainFont FONT-NAME
+    where FONT-NAME is a font name, which may be an X LFD in the
+    Unix GTK+1 version, or a Pango font name in the Windows and Unix GTK+2
+    versions.
+
+  Text font selection...
+    This button brings up a font selection dialog to choose the font
+    used in text display (such as scoring info and chat) in the
+    client. This option is stored in the preferences file as 
+    Display TextFont FONT-NAME
+
+  Table colour selection...
+    Unaccountably, not everybody likes my choice of dark green for the
+    table background. This button brings up a colour selection box to
+    allow the table colour to be changed.This option is stored in the
+    preferences file as  
+    Display TableColour COL
+    where COL is a GTK colour specification. The format depends
+    on whether xmj is built with GTK+1 - in which case it is an X color
+    of the form rgb:RRRR/GGGG/BBBB - or GTK+2 - in which case it is a
+    GTK2 color of the form #RRRRGGGGBBBB. GTK+2 programs will convert
+    an old GTK1 specification.
+
+  Gtk2 Rcfile:
+    In the GTK+2 build, xmj by default ignores completely the system and
+    user settings for look and feel, and uses its own built in settings.
+    These settings use the Clearlooks theme, if it is available, to
+    provide a simple but clean look with slightly rounded tiles; and fall
+    back to a plain theme, as compact as possible with the standard
+    engine. If you wish, you can use this option to specify the name of
+    a GTK rcfile which will be read instead of the built in settings.
+    A minimal set of settings will be read before your file is read.
+    Such a file can specify many details of the appearance, provided that
+    you know how to write a GTK rcfile. You will need to know that xmj
+    uses the following styles and bindings:
+    gtk-font-name = FONTNAME
+    can be used to change the overall font used by widgets. This will
+    overridden by the font specified by the Main Font option, if set.
+    style "table"
+    is used to give the green (or whatever you set) colour to the
+    table. All widgets that should have this style are named "table", so
+    the appropriate binding (already set in the minimal set) is
+         widget "*.table" style "table"
+    style "playerlabel"
+    is used to give the white text colour to the player status labels
+    in the corners of the board (if shown). All widgets that should have
+    this style are named "playerlabel", so the appropriate binding
+    (already set in the minimal set) is
+         widget "*.playerlabel" style "playerlabel"
+    style "tile"
+    is used in the default settings for all widgets named "tile", which
+    are all tiles except the tiles in your own concealed hand. This style
+    is not used in the minimal settings, but if set it should be bound
+    with
+         widget "*.tile" style "tile"
+    style "mytile"
+    is used in the default settings for the concealed tiles in your hand,
+    which are active buttons. These tiles are all named "mytile". This style
+    is not used in the minimal settings, but if set it should be bound with
+         widget "*.mytile" style "mytile"
+    style "claim"
+    is used to set the yellow background and large font of the claim
+    announcement popups. These popups are named "claim", so the
+    appropriate binding (already set in the minimal set) is
+         widget "*.claim" style "claim"
+    style "text"
+    is used to change the font for the text widgets such as message boxes
+    and input fields. In the minimal settings, it is empty, but is defined
+    and bound to the relevant widgets. The binding should not be changed,
+    but the style itself can be redefined. If the Text Font option is set,
+    this style will be redefined in order to implement it.
+    binding "topwindow"
+    is defined and bound to the top-level window to implement the use of
+    the left and right arrow keys to change the selected tile. It is
+    probably not helpful to change this.
+    The distribution contains three example gtkrc files, called
+    gtkrc-minimal ,  gtkrc-plain , and  gtkrc-clearlooks ,
+    which contain the program's compiled in settings.
+    This option is stored in the preferences files as
+    Display Gtk2Rcfile FILE-NAME
+    Note that if the file-name is relative, it will be interpreted
+    relative to the current directory in Unix, or the program directory in
+    Windows.
+
+  Use system gtkrc
+    As noted above, xmj does not normally load the system settings in the
+    GTK+2 build. If this option is checked, it will (after the minimal
+    settings, but before the default or user-specified settings).
+    This option is stored in the preferences files as
+    Display UseSystemGtkrc BOOL
+    where BOOL is 0 or 1.
+
+  Note for GTK+1 builds
+    Under a GTK+1 build, xmj does what any other application does. This
+    should allow the use of a .gtkrc file to change colours, using the
+    styles and bindings given above. However, this is not a supported
+    activity.
+    
+Playing Preferences
+-------------------
+This panel controls what actions the client may take on your behalf.
+The first (and currently only) section specifies when the client
+should declare tiles and sets for you. It has the following checkboxes:
+
+  flowers and seasons
+    if checked, will be automatically declared as soon as drawn.
+
+  losing hands
+    if this is checked, then when somebody else goes out, the client will
+    declare your closed sets. It declares in the order pungs, pairs,
+    chows.
+
+  winning hands
+    this is the same for when you go out.
+
+The panel has "Save & Apply", "Apply (no save)" and "Cancel" buttons,
+as in the display options panel.
+
+Game Option Preferences
+-----------------------
+This panel controls preferred game options which will be sent to the
+server when a game starts. Preferences will only be applied if we are
+the game manager, or the game has no manager. (Normally, the first
+human player to connect to the server becomes the game manager.)
+For details of options and their meanings, see the Game Options
+section in the rules.
+The panel has two action buttons, "Save Changes" and "Cancel", with
+the obvious meanings. Note if a game is in progress, changed
+preferences are NOT applied to it; however, there is a button
+in the Current Game Options panel to apply preferences.
+The main body of the panel is a scrollable window listing all the
+known options. If no preference is stored for the FooBar option,
+then there is an "Add pref" button next to a description of the FooBar 
+option. If this button is clicked, an entry for setting the option
+appears. The format of this entry depends on the type of the option
+(see the Game Options section of the rules for details of types):
+
+  Boolean (on/off) options
+    have a checkbox.
+
+  Integer options
+    have a spinbutton for numerical entry: the value can be typed in, or
+    the up and down arrows can be used to change it
+
+  Score options
+    have radio buttons for selecting Limit, Half-Limit, or other; for
+    other, the number of doubles and/or points is entered with
+    spinbuttons. (Note: the underlying protocol allows percentages
+    (possibly more than 100%) of limits to be specified for scores;
+    however, the current graphical interfaces allow only limits or
+    half-limits. Even half-limits are pretty strange, but some bizarre
+    sets of rules, such as those of the British Mah-Jong Association
+    (which plays a weird American/Western/Chinese mix), allow other
+    fractions of limits.)
+
+  String options
+    have a simple text entry field.
+
+All option entries have a "Reset" button which returns the entry to
+its previous state.
+A preference is removed by clicking the "Remove pref" button.
+
+Current Game Options
+--------------------
+When there is a connected game, this panel allows its game options to
+be modified (if we have permission to do so). The three action buttons 
+are "Apply changes", which applies the panel's settings to the current 
+game; "Apply prefs", which applies our preferences (as described
+above) to the current game; and "Cancel".
+The body of the panel contains entries for all the options of the
+current game, in the same format as the preferences panel (see above).
+
+
+UPDATES
+-------
+The latest release of the Unix Mah-Jong programs should be available at
+http://mahjong.julianbradfield.org/ 
+

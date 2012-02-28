@@ -1,0 +1,2 @@
+.\" $Header: /home/jcb/MahJong/newmj/RCS/mj-server.man,v 12.0 2009/06/28 20:43:12 jcb Rel $
+.so man1/xmj.1

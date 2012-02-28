@@ -1,0 +1,87 @@
+#!/usr/local/bin/perl
+# $Header: /home/jcb/MahJong/newmj/RCS/makefallbacktiles,v 12.0 2009/06/28 20:43:12 jcb Rel $
+
+#****************** COPYRIGHT STATEMENT **********************
+#* This file is Copyright (c) 2000 by J. C. Bradfield.       *
+#* Distribution and use is governed by the LICENCE file that *
+#* accompanies this file.                                    *
+#* The moral rights of the author are asserted.              *
+#*                                                           *
+#***************** DISCLAIMER OF WARRANTY ********************
+#* This code is not warranted fit for any purpose. See the   *
+#* LICENCE file for further information.                     *
+#*                                                           *
+#*************************************************************
+
+# take a directory of tiles, and
+# generate on stdout a module that exports a single symbol
+# fallbackpixmaps, of type **char[].
+# the xpm pixmap for tile t is in entry t;
+# the ErrorTile is in entry 99;
+# the tong pixmaps are in entries 10[1234].
+$dir = $ARGV[0];
+if ( ! defined($dir) ) {
+  print "char ***fallbackpixmaps = 0;\n";
+  exit;
+}
+
+if ( ! -d $dir ) { die("Not a directory."); }
+
+# read an xpm file and spit it out, changing the variable name
+# to pm_$i
+sub readit {
+  my($file,$i) = @_;
+
+  open(STDIN,"<$dir/$file.xpm") || die("Can't open $dir/$file");
+
+  while ( <STDIN> ) {
+    s/\*\s*(\w*)\s*\[\]/\*pm_$i\[\]/;
+    print;
+  }
+  # note it
+  $vars[$i] = 1;
+}
+
+&readit('XX',99);
+&readit('--',0);
+
+$j = 1;
+foreach $s ( 'B', 'C', 'D' ) {
+  for ( $i = 1; $i < 10; $i++ ) {
+    &readit("$i$s",$j*10+$i);
+  }
+  $j++;
+}
+
+$i = 1;
+foreach $t ( 'E', 'S', 'W', 'N' ) {
+  &readit("${t}W",40+$i);
+  $i++;
+}
+
+$i = 1;
+foreach $t ( 'R', 'W', 'G' ) {
+  &readit("${t}D",50+$i);
+  $i++;
+}
+
+$j = 6;
+foreach $s ( 'F', 'S' ) {
+  for ( $i = 1; $i < 5; $i++ ) {
+    &readit("$i$s",$j*10+$i);
+  }
+  $j++;
+}
+
+&readit('tongE',101);
+&readit('tongS',102);
+&readit('tongW',103);
+&readit('tongN',104);
+
+# now define the external symbol
+print "char **fallbackpixmaps[] = {\n";
+
+for ( $i = 0 ; $i <= $#vars ; $i++ ) {
+  print +($vars[$i] ? "pm_$i" : 0),", ";
+}
+print "\n};\n";

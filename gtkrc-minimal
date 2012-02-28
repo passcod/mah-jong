@@ -1,0 +1,37 @@
+style "table" {
+	bg[NORMAL] = "darkgreen"
+}
+
+style "playerlabel" {
+       fg[NORMAL] = "white"
+}
+
+style "claim" {
+	bg[NORMAL] = "yellow"
+	font_name = "Sans Bold 20px"
+}
+
+binding "topwindow" {
+	bind "Left" {
+		"selectleft"()
+	}
+	bind "Right" {
+		"selectright"()
+	}
+	bind "<shift>Left" {
+		"moveleft"()
+	}
+	bind "<shift>Right" {
+		"moveright"()
+	}
+}
+
+style "text" {
+}
+
+widget "*.table" style "table" 
+widget "*.claim" style "claim" 
+widget "topwindow" binding "topwindow" 
+widget "*.GtkTextView*" style "text" 
+widget "*.GtkEntry*" style "text"
+widget "*.playerlabel" style "playerlabel"

@@ -1,0 +1,356 @@
+1.12 2012-02-03
+  Bug fixes/minor features.
+  Code: fairly extensive changes to make it 64-bit clean. Includes one change
+    to function types.
+  Server: bug fix for --id-order-seats option.
+  Graphical client: use a default Unix socket if no name given; save the
+    robot player options between sessions.
+
+1.11 2011-08-29
+  Bug fixes.
+  Protocol: 1110 corrects konging rule: a just-claimed pung can now be
+    converted to a kong, rather than having to wait till next draw.
+  Code: game module implements above.
+  Graphical client: game status was not always being updated; make 
+    iconification of subsidiary windows work properly; fix non-appearance
+    of "About xmj" window.
+
+1.10 2009-06-28
+  Substantial enhancements. Bug fixes. Port to GTK+2.
+  Protocol: 1101 adds NumRounds game option.
+  Code: a few functions added to player and game modules. Makefile options
+    tidied, and code for Windows with and without msys added.
+  Server: fix couple of bugs, one causing crash. Handle NumRounds option.
+    Add --id-order-seats option. End game at end of hand, instead of start
+    of next.
+  Graphical client: port to GTK+2. Allow customization via gtkrc files.
+    Fix long-standing bug in display of tiles (positioning of left and
+    right players' hands). Provide player status info to right of rack,
+    when the wall is shown. Handle game ending at end of last hand.
+    Allow user to arrange tiles in hand (SortTiles display option).
+    Fix an old and silly bug (causing only subtle UI misbehaviour).
+    Remove wrong size setting of scoring information window.
+    Arrange for players to be seated in order of specification when
+    starting local game (if not random).
+    Handle interrupted system calls on windows gtk2.
+  Player: document the strategy options (partly, at least).
+
+1.9 2008-08-22
+  Bug fixes and enhancements.
+  Protocol: 1100 adds authorization messages, and a redirection message.
+  Code: new function to build quoted strings for shell; various tidies
+    of warnings. Minor change to Windows makefile. Add index() for Windows.
+  Server: handle basic authorization. Add --hand-history option.
+  Graphical client: handle basic authorization. Fix bug: failure if
+  robot player names included spaces and quotes etc.
+
+1.8 2007-05-22
+  Bug fixes and enhancements.
+  Protocol: 1072 adds ShowOnWashout option.
+  Code: a few minor fixes and tweaks; in particular, change order
+    of automatic declarations to do pairs before chows.
+  Server: add option to reveal tiles on washout.
+  Graphical client: amalgamate a couple of buttons in dialogues for
+    more intuitive presentation.
+  Player: rehashed somewhat, with various parameters redistributed into
+    a bunch of magic numbers, with values chosen by experiment. Should
+    play a somewhat tougher game.
+
+1.7 2006-01-22
+  Bug fixes and enhancements.
+  Code: much diagnostic and logging code added. More socket code.
+    Buffer overflow exposures fixed (Len Budney). Add Reconnect command.
+    Fix very old bug in Kong Upon Kong checking (didn't account for
+    closed kongs).
+  Server: fix bug in sending options to players when resuming a game.
+    Allow clients to refetch game state by Reconnect.
+  Graphical client: add crash reporting via Internet. Fix bug in UI after
+    a kong is robbed. Windows binary: build with modern libraries and tool
+    chain - seems to fix the mysterious crashes.
+
+1.6.3 2004-05-09
+  Bug fixes.
+  Code: the fix for thirteen wonders in 1.6.1 needed fixing.
+
+1.6.2 2004-04-16
+  Bug fixes.
+  Code: use (v)snprintf in Windows code, since it does exist, rather than
+    faking it with inadequate substitute.
+
+1.6.1 2004-04-10
+  Bug fixes.
+  Server: segfaulted when players connected with null names.
+  Code: the thirteen wonders checking function was not checking correctly.
+
+1.6 2003-10-07
+  Bug fixes and security fixes.
+  Protocol: use of backslash escaping has been tidied up. Arguably this
+      is only a bug fix, but protocol version has been bumped to 1060 anyway.
+  Graphical client: when auto-declaration of specials was on, players did
+      not get the chance to declare kongs in their dealt hands - fixed.
+  Server: receiving duplicate "NoClaim"s while waiting for a Chow claim 
+      to complete could result in the chow claim being ignored - fixed this.
+  Code: backslash escaping tidied up, and infinite loop bug removed.
+    Several potential buffer overrun exploits closed (thanks to 
+      Nicolas Boullis for these).
+
+1.5.6 2003-06-04
+  Bug fixes and minor enhancements.
+  Graphical client: add option to select table colour. Minor wording
+      changes. Code tidies.
+  Server: Change meaning of DiscarderDoubles to match Singaporean
+      play (as originally intended). Bug fix in loading games from file.
+  Code: fix bug in handling of kong robbing (konging flag wasn't cleared,
+      causing crash in next hand).
+
+1.5.5 2003-04-11
+  Bug fixes.
+  Graphical client: fix bug in automatic declaration of winning hands
+      when having Thirteen Orphans.
+    Extend auto-declaration so that it claims the discard as well.
+  Server: hands with Thirteen Orphans were being given Imperial Jade as well.
+
+1.5.4 2003-04-10
+  Bugfixes.
+  Graphical client: fix bug in interaction between sticky open dialog
+      fields and the  --connect  command-line option.
+    Change the location for xmj.ini under Windows: it is now
+      in HOMEPATH, current (if writable), or root (in that order).
+      Also, look for old xmj.ini in all locations if not found
+      in the expected location.
+    Fix bug in Message processing causing crashes.
+  Code: changed spec of get_homedir().
+
+1.5.3 2003-04-05
+  Bugfix, minor enhancement.
+  Graphical client: add display option to choose text font.
+  Code: fix bug in handling of "last 4 tiles" cannon (again).
+
+1.5.2 2003-04-01
+  Bugfixes, minor enhancement.
+  Protocol: version now 1050, as we now accept Chow AnyPos
+      while MahJonging.
+  Graphical client: add a checkbox to keep focus in message window.
+    Fix handling of chows when MahJonging so that erroneous chows
+      don't cause deadlock.
+  Server: don't allow reconnects while terminating a game.
+  Code: make protocol text expansion accept null source. (Prevents
+      errors in handling empty CMsgMessages.)
+    Add hacks to allow "server" to be stdin/stdout.
+    Change handling of chows to allow an AnyPos chow declaration
+      when claiming the discard for Mah-Jong.
+
+1.5.1 2003-03-16
+  Bugfixes.
+  Server: fix bugs in handling of disconnecting players before game starts.
+  Code: in protocol decoding, work round bug in Microsoft implementation
+      of scanf.
+
+1.5  2003-03-15
+  Feature enhancements, bugfixes.
+  Rules/protocol: protocol can now remove players from a game (1036).
+    Added TimeoutGrace game option and LocalTimeouts player option (1036).
+    Added LoadState command (1038).
+    Added LosersSettle, EastDoubles, DiscDoubles game options (1040).
+    Protocol version now 1040.
+  Server: handle new game options.
+    Add --no-manager option to stop players changing game options.
+    Add --end-on-disconnect option to end the game gracefully when
+      a player disconnects, and --disconnect-penalties to specify
+      penalties for this.
+    Allow clients to handle timeouts locally.
+    Handle dynamic loading of game state in response to LoadState.
+  Graphical client: re-arrange new game and connection menu and panels.
+    Several bugfixes.
+    Add display options: suppress popups, include info and message windows
+      in main window.
+    Make some fields sticky in dialogs.
+    Add options to declare specials and sets automatically.
+    New window to display warnings from internal code.
+    Add font selection for main font.
+    Add display size to the preferences panel.
+    Handle timeouts locally if allowed.
+    Include small tile set in distribution.
+    Use "Display" instead of "XmjOption" in rc file.
+  Code: bugfix to cannon handling.
+    Fix bug in treatment of scoring options, avoid overflow.
+    Some changes to spec of internal functions.
+    Prevent players discarding when they should draw a tile.
+    New functions for warnings.
+
+1.4.1  2002-08-09
+  Minor bugfix.
+  Server: set timeout option correctly when resuming game.
+  Code: fix bug in handling of cannons in last four tiles.
+
+1.4  2002-03-30
+  Feature enhancement.
+  Rules/protocol: add option to implement Millington's rules on kongs.
+    Protocol version now 1034.
+  Server: implement scoring with Millington's rules on kongs.
+      Warning: server is not perfectly backward compatible, as annexed and
+      claimed kongs are now distinguished in scoring information, regardless
+      of the appropriate option setting. However, earlier clients using my
+      code will not be worried by this. 
+  Graphical client: handle display of Millington's kong variations.
+  Code: handle Millington's kongs. (Changes to several modules.)
+
+1.3.2  2002-02-04
+  Minor bugfix.
+  Graphical client: fix small bug in handling of numerical option fields.
+
+1.3.1  2002-01-08
+  Minor bugfixes and invisible enhancements.
+  Graphical client: fix bug in option parsing.
+    Change tiletip positions; when tiletips always on, have the selected
+      tile's tip always visible.
+    Move tiletips, claim popups, and animation into the main window
+      (except under Windows, where animation is still done by popups).
+    Fix bug in uniconification of auxiliary windows.
+  Code: introduced the vlazy_fixed widget, another variation on 
+      the gtk_fixed, for use with "popups".
+
+1.3  2002-01-02
+  Feature enhancements and bugfixes.
+  Rules/protocol: added options for fully and partially concealed hand scores.
+    Added (deprecated) option to allow losers to score pure and concealed
+      doubles.
+    All Honours and All Terminals now also get the All Majors score.
+    Protocol version now 1032.
+  Server: prints OK: socket  on startup (or FAILED: if it fails); used
+      by xmj.
+    Some minor code tidies.
+  Graphical client: on new game panel, allow specification of robot names.
+    Include preferences for default robot names.
+    Add keyboard accelerators for selecting tiles and all menus.
+    Be more intelligent about starting server.
+    Don't animate tiles if the main window is unmapped or obscured.
+    Add option to iconify all subsidiary windows along with main.
+    Various small fixes.
+  Player: add --name option.
+
+1.2.3  2001-09-06
+  Bugfix.
+  Gui: fix stupid bug introduced in last release causing
+    crash after about five hands.
+
+1.2.2  2001-09-04
+  Feature enhancements.
+  Graphical client: add Tileset and Tileset search path options.
+    Allow display option changes to take immediate effect.
+
+1.2.1  2001-08-16
+  Bugfix release.
+  Server: fixed rare but major bug in dead wall handling.
+    Fixed minor scoring bug (filling the only place).
+
+1.2    2001-08-06
+  Feature enhancement.
+  Rules/protocol: added file name field to SaveState cmsg.
+    Added Comment cmsg.
+    Added Wall cmsg.
+    Protocol version now 1030.
+  Server: handle new options.
+    Add --load-game and --save-on-exit options.
+    Implemented game saving and restoring.
+  Graphical client: added Save and Resume commands.
+    Changed some menu and menu option names.
+  Code: some tidying in addition to new features.
+
+1.1    2001-05-18
+  Major feature enhancements.
+  Rules/protocol: added a "nat" (unsigned in) game option type.
+    Added game options:
+    Limits on score, and no-limit games.
+    Seven Pair hands.
+    Flowers/Seasons optional.
+    Scores for own Flower etc. changeable.
+    Dead Wall may be per Millington, per everybody else, or not used.
+    Base score for Mah Jong changeable.
+    Protocol version now 1020.
+  Server: handle new game options. Make DeadWall16 unset by default.
+    Added --wallfile option (testing only).
+    Added --option-file option.
+    Make first human to connect be the game manager.
+  Graphical client: added an Options menu, giving access to:
+      display options: dialog position, animation, tiletips, wall showing.
+      game option preferences: options applied to all games.
+      current game options: control over currently connected game.
+    Uses an rc file to store preferences.
+    Added tiletips facility.
+    When not showing wall, say how many live tiles left.
+    Handle new game options, such as no flowers.
+    Eliminated flickering problem when the wall is shown.
+    Suggests donation after ten full games.
+  Player: complete re-write of strategy engine. Now plays much more
+      strongly in offensive play. Still has only rudimentary defence.
+    New strategy control options, but still undocumented. Probably
+      stable enough to document: next release, perhaps.
+    Handles the new game options (though never tries to get seven pairs).
+  Code: in addition to all the code required for new features, there
+      has been a large amount of tidying up. Still not enough...
+
+1.0.4  2001-04-05
+  Bugfix etc:
+  Server: bug in scoring: was only giving 2 pts for fishing a major
+      pair (despite saying 4 in the messsage!).
+  Graphical client: default to a smaller size on 800x600 displays.
+    Add an icon to the Windows version.      
+
+1.0.3  2001-02-25
+  Bugfix release.
+  Graphical client: the --dialogs-below option has been broken since
+      the pre-release (and nobody's noticed). Now fixed.
+
+1.0.2  2001-02-10
+  Bugfix release.
+  Server: error in handling kongs declared while declaring specials:
+      it wasn't drawing a replacement tile for the player.
+    Also failing to handle properly the (vanishingly unlikely)
+      case of such a kong being robbed.
+    In addition, the Heaven's/Earth's Blessing hands were being
+      incorrectly detected, and would not be granted if a kong had
+      been declared before start of play.
+    Added a delay that may help with a Windows problem, when the
+      client crashes at end of game.
+    Added a --seed option for the random number generator.
+  Graphical client: now copes correctly with robbing a kong declared
+      before start of play.
+
+1.0.1  2001-01-28
+  Bugfix patch:
+  Server: rare but fatal and annoying bug fixed: when a player makes
+      a dangerous discard and has no choice but to do so, the server
+      would abort. Fixed by making the appropriate macro in
+      game.h return a bool; also made encode_cmsg more liberal
+      about what it accepts, to prevent further such bugs.
+
+1.0  2001-01-22
+  First full release. Changes since the pre-release:
+  Rules: the rules now match the rest of the world in that konging
+      and declaring flowers is allowed only after drawing from the wall.
+      The protocol version has been incremented to 1010 to mark this change.
+      (The old rule will still apply if playing with old clients.)
+    Robbing a closed kong to complete Thirteen Unique Wonders is now
+      implemented.
+    The default score for bouquets has been cut back to one double.
+    One or two outright bugs fixed (handling of Thirteen Wonders failed).
+  Server: several bugs fixed (in ptic, letting off cannons was buggy).
+    --exit-on-disconnect option added.
+    --no-special-scores option added.
+    --randomseats option changed to --random-seats.
+  Player: several bugs fixed, and many (not very successful) attempts
+      to improve the tactics.
+  Graphical client: many bug fixes.
+    Added "About" window.
+    Added "New Game..." entry to "Connect" menu, to start a game
+      with a local server and clients.
+    The scoring window is now popped up at the end of scoring, rather
+      than the beginning.
+    A message is displayed while waiting for a suspended game to restart.
+  Code: lots of restructuring, not least to accommodate Windows.
+    Stopped using imake, just use a GNU Makefile instead.
+
+1.0beta-pre1 2000-12-07
+  Pre-release of first public source release.
+

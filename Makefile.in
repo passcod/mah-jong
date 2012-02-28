@@ -1,0 +1,467 @@
+# $Header: /home/jcb/MahJong/newmj/RCS/Makefile.in,v 12.1 2009/07/10 07:55:51 jcb Rel $
+# Master makefile for the xmj suite.
+
+### NOTE NOTE NOTE
+### This makefile uses some features specific to GNU make.
+### If you do not have GNU make, you will need to adjust it.
+### In particular, example Windows specific settings are included here
+### by means of    ifdef Win32   conditionals (where Win32 is a Makefile
+### variable that can be set on the command line, for example).
+### It should be easy to edit these out.
+### As far as I know, the only other non-portable feature is the
+### use of %-pattern rules, but they occur in many makes.
+
+# Options can be passed by setting variables from the command line:
+# pass   Gtk=   to build with Gtk+1.2
+# pass   Win32=1  to build with MinGW on Win32 without MSYS
+# pass   Win32=2  to build with MinGW and MSYS
+# pass   Warnings=1  to switch on almost all compiler warnings
+
+# The things you are most likely to change come first!
+
+# first target: don't change!
+all::
+
+### Local configuration options. Read and edit as necessary.
+
+# Which gtk+ version do you want?
+# If you're using GTK+ 1.2, set Gtk to be empty
+# Gtk =
+# if you're using GTK+ 2.n, for ANY n, set Gtk to be 2.0 .
+Gtk = 2.0
+
+# This is not available in current public releases.
+# Uncomment the following line to build the table manager.
+# TableManager=1
+
+# The directory in which to find the tile pixmaps that are
+# compiled into the program. Beware of licensing considerations.
+# (The tiles-v1 pixmaps may only be linked into GPLed programs.)
+FALLBACKTILES=./tiles-v1
+
+# The directory in which to find tile pixmaps.
+# Defaults to NULL, causing the compiled-in tiles to be used.
+TILESET=NULL
+
+# The search path for finding tile pixmap directories.
+# Defaults to NULL, meaning current directory.
+TILESETPATH=NULL
+
+# Where to install the programs.
+# (Don't bother with this on Windows; I don't have an install target
+# for Windows.)
+# The binaries go into  $(DESTDIR)$(BINDIR)
+DESTDIR = /usr/local/
+BINDIR = bin
+# The man pages go into $(DESTDIR)$(MANDIR)
+MANDIR = man/man1
+# and the appropriate suffix is 1
+MANSUFFIX = 1
+
+### End of local configuration.
+
+### System dependent settings.
+# This section contains compiler settings etc.
+# If you think this reminds of you something, you're right: this
+# makefile was made by stripping out most of an imake-generated file.
+
+# It's best to use gcc if you can.
+CC = gcc
+
+# C debugging and optimization flags. 
+# In development, we turn on all reasonable warnings.
+# However, in the production releases, we don't because other people's
+# code (e.g. glib) may provoke warnings.
+# Also, we do NOT enable optimization by default, because RedHat 6
+# Linux distributions have a seriously buggy C compiler.
+# I thought the preceding comment should be deleted...but in 2009,
+# SuSE ships with a seriously buggy C compiler (gcc 4.3). So I'll
+# just leave optimization switched off.
+ifdef Warnings
+CDEBUGFLAGS = -g -Wall -W -Wstrict-prototypes -Wmissing-prototypes
+else
+CDEBUGFLAGS = -g
+endif
+# The -Wconversion flag is also useful to detect (more than usual)
+# abuse of enums, but it generates many superfluous warnings, so
+# is not on by default.
+# To check for non-ANSI usages, use -ansi; 
+# to get all the ANSI-mandated warnings, use -pedantic, but 
+# this is so pedantic it's not worth it.
+
+# Defines for the compilation.
+ifdef Win32
+WINDEFINES = -DWIN32=1
+endif
+
+ifeq ($(Win32),2)
+# This doesn't work if one tries to set these. Does anybody know
+# how to get a double quote through DOS or whatever to gcc ?
+DEFINES = -DTILESET=$(TILESET) -DTILESETPATH=$(TILESETPATH) $(WINDEFINES)
+else
+DEFINES = -DTILESET='$(TILESET)' -DTILESETPATH='$(TILESETPATH)' $(WINDEFINES)
+endif
+
+ifdef Gtk
+GTKDEFINES = -DGTK2=1
+endif
+
+# Options for compiling.
+ifdef Win32
+# this is suitable for recent mingw releases (the equivalent
+# of the old -fnative-struct)
+CCOPTIONS = -mms-bitfields
+endif
+
+# Extra libraries needed above whatever the system provides you with.
+# Things like -lnsl on Solaris are the most likely examples.
+ifdef Win32
+# We need the winsock libraries
+LDLIBS =  -lwsock32
+else
+# Red Hat and Mandrake (and probably most other) Linux systems
+# need nothing, as any needed libraries are brought in for gtk anyway.
+LDLIBS =
+# If you are on Solaris, you may need the following:
+# LDLIBS = -lsocket -lnsl
+# If you are on HP-UX, you may need
+# LDLIBS = -lm
+endif
+
+# some systems have buggy malloc/realloc etc, so we may use
+# Doug Lea's implementation. This is switched on for Windows
+# at the moment
+ifdef Win32
+MALLOCSRC = malloc.c
+MALLOCOBJ = malloc.o
+endif
+
+# The xmj program is built with gtk+, so it needs to know where the
+# libraries and headers are.
+ifdef Win32
+ifdef Gtk
+# should be the same as unix, if it can find pkg-config
+EXTRA_INCLUDES=$(shell pkg-config --cflags gtk+-$(Gtk))
+# We also add the flag that makes xmj.exe be a GUI program
+GUILIBS=$(shell pkg-config --libs gtk+-$(Gtk)) -mwindows
+else
+# You'll need to say explicitly where they are, as here, which is
+# a bit of a mess in my setup
+EXTRA_INCLUDES=-IC:/gtk/include/glib-2.0 -IC:/gtk/lib/glib-2.0/include -IC:/gtk/include -IC:/gtk/lib/gtk+/include
+# We also add the flag that makes xmj.exe be a GUI program
+GUILIBS=-LC:/gtk/lib -lgtk-0 -lgdk-0 -LC:/gtk/bin/ -lglib-2.0-0 -lgmodule-2.0-0 -mwindows
+endif
+else
+# Not Windows. If gtk+ is properly installed, this is all that's needed.
+ifdef Gtk
+EXTRA_INCLUDES=`pkg-config --cflags gtk+-$(Gtk)`
+GUILIBS=`pkg-config --libs gtk+-$(Gtk)`
+else
+EXTRA_INCLUDES=`gtk-config --cflags`
+GUILIBS=`gtk-config --libs`
+endif
+endif
+
+# We use gcc to link as well
+CCLINK = $(CC)
+
+# don't mess with these
+ALLINCLUDES = $(INCLUDES) $(EXTRA_INCLUDES)
+ALLDEFINES = $(ALLINCLUDES) $(EXTRA_DEFINES) $(DEFINES) $(GTKDEFINES)
+CFLAGS = $(EXTRA_CFLAGS) $(CDEBUGFLAGS) $(CCOPTIONS) $(ALLDEFINES)
+LDOPTIONS = $(CDEBUGFLAGS) $(CCOPTIONS)  $(EXTRA_LDOPTIONS)
+
+# various auxiliary program and settings.
+ifeq ($(Win32),)
+# GNU make, we hope
+MAKE = make
+CP = cp -f
+RM = rm -f
+# makedep is a gcc-based makedepend that doesn't look at the 
+# standard files.
+DEPEND = ./makedep
+DEPENDFLAGS =
+# perl is needed for generating several files
+PERL = perl
+# suffix of executables
+EXE = 
+# programs used in installation
+MKDIRHIER = mkdir -p
+INSTALL = install
+INSTALLFLAGS = -c
+INSTPGMFLAGS = -s
+INSTMANFLAGS = -m 0444
+else
+ifeq ($(Win32),1)
+# Windows with mingw but not msyste
+# GNU make, we hope
+MAKE = make
+CP = xcopy
+# suppress errors, since del complains if file not there to remove
+RM = -del /f
+# we don't have a makedepend on windows ...
+DEPEND =
+DEPENDFLAGS =
+# perl is needed for generating several files
+PERL = perl
+# suffix of executables
+EXE = .exe
+# programs used in installation: not in windows
+MKDIRHIER = 
+INSTALL = 
+INSTALLFLAGS = 
+INSTPGMFLAGS = 
+INSTMANFLAGS = 
+else
+# windows with msys
+MAKE = make
+CP = cp -f
+RM = rm -f
+# we don't have a makedepend on windows ...
+DEPEND =
+DEPENDFLAGS =
+# perl is needed for generating several files
+PERL = perl
+# suffix of executables
+EXE = .exe
+# programs used in installation: not in windows
+MKDIRHIER = 
+INSTALL = 
+INSTALLFLAGS = 
+INSTPGMFLAGS = 
+INSTMANFLAGS = 
+endif
+endif
+### There should be no need to edit after this point,
+### unless you're using a non-GNU make.
+
+
+all:: Makefile
+
+Makefile: Makefile.in
+	$(RM) $@
+	$(CP) $< $@
+	make depend
+
+# Autogenerated files to do with the table manager
+ifdef TableManager
+ TMAUTOGENS = enc_mcmsg.c enc_mpmsg.c dec_mcmsg.c dec_mpmsg.c mcmsg_union.h mcmsg_size.c mpmsg_union.h mpmsg_size.c mprotocol-enums.c mprotocol-enums.h
+else
+ TMAUTOGENS = 
+endif
+
+# This variable lists all the auto-generated program files.
+AUTOGENS = enc_cmsg.c enc_pmsg.c dec_cmsg.c dec_pmsg.c cmsg_union.h cmsg_size.c pmsg_union.h pmsg_size.c  game-enums.c game-enums.h player-enums.c player-enums.h protocol-enums.c protocol-enums.h  tiles-enums.c tiles-enums.h fbtiles.c version.h $(TMAUTOGENS)
+
+# This is a trick to make the auto-generated files be created
+# by make depend, if they're not already there. Otherwise the
+# make depend won't put them in the dependencies.
+depend:: $(AUTOGENS)
+	echo Remade some auto-generated files
+
+# The programs
+ifdef TableManager
+ PROGRAMS = xmj$(EXE) mj-server$(EXE) mj-player$(EXE) mj-manager$(EXE)
+else
+ PROGRAMS = xmj$(EXE) mj-server$(EXE) mj-player$(EXE)
+endif
+
+all:: $(PROGRAMS)
+
+# The controller target. Requires player, tiles, protocol, sysdep
+
+SRCS1 = controller.c player.c tiles.c protocol.c game.c scoring.c sysdep.c $(MALLOCSRC)
+OBJS1 = controller.o player.o tiles.o protocol.o game.o scoring.o sysdep.o $(MALLOCOBJ)
+
+ OBJS = $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4)
+ SRCS = $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4)
+
+mj-server$(EXE): $(OBJS1)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJS1)  $(LDLIBS)  $(EXTRA_LOAD_FLAGS)
+
+ifndef Win32
+
+install:: mj-server$(EXE)
+	@if [ -d $(DESTDIR)$(BINDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(BINDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS)  mj-server$(EXE) $(DESTDIR)$(BINDIR)/mj-server
+
+install.man:: mj-server.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) mj-server.man $(DESTDIR)$(MANDIR)/mj-server.$(MANSUFFIX)
+
+endif # Win32
+
+ifdef TableManager
+# The table manager. Requires mprotocol and sysdep
+SRCS4 = manager.c mprotocol.c sysdep.c $(MALLOCSRC)
+OBJS4 = manager.o mprotocol.o sysdep.o $(MALLOCOBJ)
+
+mj-manager$(EXE): $(OBJS4)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJS4)  $(LDLIBS)  $(EXTRA_LOAD_FLAGS)
+
+ifndef Win32
+
+install:: mj-manager$(EXE)
+	@if [ -d $(DESTDIR)$(BINDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(BINDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS)  mj-manager$(EXE) $(DESTDIR)$(BINDIR)/mj-manager
+
+install.man:: mj-manager.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) mj-manager.man $(DESTDIR)$(MANDIR)/mj-manager.$(MANSUFFIX)
+
+endif # Win32
+
+endif # TableManager
+
+# the greedy player
+
+SRCS2 = greedy.c client.c player.c tiles.c protocol.c game.c sysdep.c $(MALLOCSRC)
+SRCS2A = client.c player.c tiles.c protocol.c game.c sysdep.c $(MALLOCSRC)
+OBJS2 = greedy.o client.o player.o tiles.o protocol.o game.o sysdep.o $(MALLOCOBJ)
+OBJS2A = client.o player.o tiles.o protocol.o game.o sysdep.o $(MALLOCOBJ)
+
+mj-player$(EXE): $(OBJS2) $(DEPLIBS2)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJS2)  $(LDLIBS)  $(EXTRA_LOAD_FLAGS)
+
+ga: ga.o $(OBJS2A) $(DEPLIBS2)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) ga.o $(OBJS2A)  $(LDLIBS)  $(EXTRA_LOAD_FLAGS)
+
+# generic greedy variants
+greedy-%.o: greedy-%.c $(SRCS2A)
+
+greedy-%: greedy-%.o $(OBJS2A)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $< $(OBJS2A)  $(LDLIBS)  $(EXTRA_LOAD_FLAGS)
+
+ifndef Win32
+
+install:: mj-player$(EXE)
+	@if [ -d $(DESTDIR)$(BINDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(BINDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS)  mj-player$(EXE) $(DESTDIR)$(BINDIR)/mj-player
+
+install.man:: mj-player.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) mj-player.man $(DESTDIR)$(MANDIR)/mj-player.$(MANSUFFIX)
+
+endif # Win32
+
+# the gui
+
+ifdef Win32
+# the icon resource file and object
+ICONOBJ = iconres.o
+iconres.o: iconres.rs icon.ico
+	windres iconres.rs iconres.o
+else
+ICONOBJ =
+endif
+
+SRCS3 = gui.c gui-dial.c lazyfixed.c vlazyfixed.c client.c player.c tiles.c fbtiles.c protocol.c game.c sysdep.c $(MALLOCSRC)
+OBJS3 = gui.o gui-dial.o client.o lazyfixed.o vlazyfixed.o player.o tiles.o fbtiles.o protocol.o game.o sysdep.o $(MALLOCOBJ) $(ICONOBJ)
+
+xmj$(EXE): $(OBJS3) $(DEPLIBS3)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJS3) $(GUILIBS) $(LDLIBS)  $(EXTRA_LOAD_FLAGS)
+
+install:: xmj$(EXE)
+	@if [ -d $(DESTDIR)$(BINDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(BINDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS)  xmj$(EXE) $(DESTDIR)$(BINDIR)/xmj
+
+install.man:: xmj.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTMANFLAGS) xmj.man $(DESTDIR)$(MANDIR)/xmj.$(MANSUFFIX)
+
+# version.h is now made from version.h.in by the release script.
+# so if we are not making a release, we'd better provide it if
+# it isn't there.
+version.h:
+	cp version.h.in $@
+	chmod u+w $@
+
+# rule to generate the fallback tiles
+fbtiles.c: $(FALLBACKTILES) makefallbacktiles Makefile
+	$(PERL) makefallbacktiles $(FALLBACKTILES) >fbtiles.c
+
+# Rules for the auto generated files
+
+enc_cmsg.c: protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -cmsg
+
+enc_pmsg.c: protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -pmsg
+
+dec_cmsg.c: protocol.h proto-decode-msg.pl
+	$(PERL) proto-decode-msg.pl -cmsg
+
+dec_pmsg.c: protocol.h proto-decode-msg.pl
+	$(PERL) proto-decode-msg.pl -pmsg
+
+# rules for the other auxiliary files
+# the commands will be executed twice, but never mind.
+cmsg_union.h cmsg_size.c: protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -cmsg
+
+pmsg_union.h pmsg_size.c: protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -pmsg
+
+enc_mcmsg.c: protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -mcmsg
+
+enc_mpmsg.c: protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -mpmsg
+
+dec_mcmsg.c: protocol.h proto-decode-msg.pl
+	$(PERL) proto-decode-msg.pl -mcmsg
+
+dec_mpmsg.c: protocol.h proto-decode-msg.pl
+	$(PERL) proto-decode-msg.pl -mpmsg
+
+# rules for the other auxiliary files
+# the commands will be executed twice, but never mind.
+mcmsg_union.h mcmsg_size.c: protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -mcmsg
+
+mpmsg_union.h mpmsg_size.c: protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -mpmsg
+
+# Rule for the enum parsing files:
+%-enums.h: %.h make-enums.pl
+	$(PERL) make-enums.pl $<
+
+%-enums.c: %.h make-enums.pl
+	$(PERL) make-enums.pl $<
+
+# distclean also removes the auto-generated files and the Makefile
+distclean:: clean
+	$(RM) Makefile $(AUTOGENS)
+
+# used to build a source release
+textdocs:: use.txt rules.txt
+
+use.txt rules.txt: xmj.man
+	$(RM) use.txt rules.txt
+	$(PERL) maketxt xmj.man
+	chmod 444 use.txt rules.txt
+
+
+
+depend::
+	$(DEPEND) $(DEPENDFLAGS) -- $(ALLDEFINES) $(DEPEND_DEFINES) -- $(SRCS)
+
+clean::
+	$(RM) $(PROGRAMS)
+
+clean::
+	$(RM) *.o core errs *~

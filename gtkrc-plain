@@ -1,0 +1,77 @@
+gtk-font-name = "Verdana Condensed 12px"
+
+style "default" { 
+	bg[NORMAL] = "#CCC"
+	fg[NORMAL] = "#000"
+	bg[PRELIGHT] = "#EEE"
+	fg[PRELIGHT] = "#000"
+	bg[ACTIVE] = "#AAA"
+	fg[ACTIVE] = "#000"
+	bg[SELECTED] = "#228"
+	fg[SELECTED] = "#FFF"
+	bg[INSENSITIVE] = "#888"
+	fg[INSENSITIVE] = "#444"
+	xthickness = 2
+	ythickness = 2
+}
+
+widget "*" style "default"
+
+style "table" {
+	bg[NORMAL] = "darkgreen"
+}
+
+
+style "playerlabel" {
+       fg[NORMAL] = "white"
+}
+
+style "tile" {
+	bg[NORMAL] = "white"
+	fg[NORMAL] = "black"
+	xthickness = 1
+ 	ythickness = 1
+	GtkButton::inner-border = { 0, 0, 0, 0 }
+}
+
+style "mytile" {
+	bg[NORMAL] = "white"
+	bg[PRELIGHT] = "yellow"
+	bg[ACTIVE] = "#444"
+	GtkButton::inner-border = { 0, 0, 0, 0 }
+	xthickness = 1
+ 	ythickness = 1
+}
+
+style "claim" {
+	bg[NORMAL] = "yellow"
+	font_name = "Sans Bold 20px"
+}
+
+binding "topwindow" {
+	bind "Left" {
+		"selectleft"()
+	}
+	bind "Right" {
+		"selectright"()
+	}
+	bind "<shift>Left" {
+		"moveleft"()
+	}
+	bind "<shift>Right" {
+		"moveright"()
+	}
+}
+
+style "text" {
+	font_name = "Courier New 16px"
+}
+
+widget "*.table" style "table" 
+widget "*.tile" style "tile" 
+widget "*.mytile" style "mytile" 
+widget "*.claim" style "claim" 
+widget "topwindow" binding "topwindow" 
+widget "*.GtkTextView*" style "text" 
+widget "*.GtkEntry*" style "text" 
+widget "*.playerlabel" style "playerlabel"

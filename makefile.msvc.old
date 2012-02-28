@@ -1,0 +1,159 @@
+NULL=nul
+CPP=cl.exe
+LINK32=link.exe
+PERL=I:\perl\bin\perl
+GTKDIR=\download\gtk\src\gtk+
+GLIBDIR=\download\glib\src\glib
+
+ALL : MahJong.exe mj-server.exe mj-player.exe
+CLEAN : 
+	-@erase *.obj
+	-@erase *~
+	-@erase fbtiles.c
+	-@erase enc_cmsg.c
+	-@erase enc_pmsg.c
+	-@erase dec_cmsg.c
+	-@erase dec_pmsg.c
+	-@erase cmsg_union.h
+	-@erase cmsg_size.c
+	-@erase pmsg_union.h
+	-@erase pmsg_size.c
+	-@erase game-enums.h
+	-@erase game-enums.c
+	-@erase player-enums.h
+	-@erase player-enums.c
+	-@erase protocol-enums.h
+	-@erase protocol-enums.c
+	-@erase tiles-enums.h
+	-@erase tiles-enums.c
+	-@erase vc40.idb
+	-@erase vc40.pdb
+	-@erase MahJong.exe
+	-@erase MahJong.ilk
+	-@erase MahJong.pch
+	-@erase MahJong.pdb
+	-@erase mj-server.exe
+	-@erase mj-server.ilk
+	-@erase mj-server.pdb
+	-@erase mj-player.exe
+	-@erase mj-player.ilk
+	-@erase mj-player.pdb
+
+CPP_PROJ=/nologo /MLd /W3 /Gm /Gi /Zi /Od /I"$(GTKDIR)" /I"$(GTKDIR)\gdk" /I"$(GLIBDIR)" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_X86_" /Fp"MahJong.pch" /YX /c 
+
+LINK32_MJFLAGS=ws2_32.lib "$(GTKDIR)\gtk\gtk-1.3.lib"\
+ "$(GTKDIR)\gdk\gdk-1.3.lib" "$(GLIBDIR)\glib-1.3.lib"\
+ /nologo /incremental:yes /pdb:"./MahJong.pdb" /debug /machine:ix86\
+ /out:"./MahJong.exe" 
+
+LINK32_SERVERFLAGS=ws2_32.lib \
+ /nologo /incremental:yes /pdb:"./mj-server.pdb" /debug /machine:ix86\
+ /out:"./mj-server.exe" 
+
+LINK32_PLAYERFLAGS=ws2_32.lib \
+ /nologo /incremental:yes /pdb:"./mj-player.pdb" /debug /machine:ix86\
+ /out:"./mj-player.exe" 
+
+LINK32_MJOBJS= \
+	gui.obj \
+	gui-dial.obj \
+	client.obj \
+	player.obj \
+	tiles.obj \
+	fbtiles.obj \
+	protocol.obj \
+	game.obj \
+	sysdep.obj
+
+LINK32_SERVEROBJS= \
+	controller.obj \
+	player.obj \
+	tiles.obj \
+	protocol.obj \
+	game.obj \
+	scoring.obj \
+	sysdep.obj
+
+LINK32_PLAYEROBJS= \
+	greedy.obj \
+	client.obj \
+	player.obj \
+	tiles.obj \
+	protocol.obj \
+	game.obj \
+	sysdep.obj
+
+MahJong.exe : $(LINK32_MJOBJS)
+    $(LINK32) @<<
+  $(LINK32_MJFLAGS) $(LINK32_MJOBJS)
+<<
+
+mj-server.exe : $(LINK32_SERVEROBJS)
+    $(LINK32) @<<
+  $(LINK32_SERVERFLAGS) $(LINK32_SERVEROBJS)
+<<
+
+mj-player.exe : $(LINK32_PLAYEROBJS)
+    $(LINK32) @<<
+  $(LINK32_PLAYERFLAGS) $(LINK32_PLAYEROBJS)
+<<
+
+.c.obj:
+   $(CPP) $(CPP_PROJ) $<  
+
+gui.obj : gui.c gui.h sysdep.h client.h game.h tiles.h player.h protocol.h\
+ game-enums.h player-enums.h cmsg_union.h pmsg_union.h protocol-enums.h
+gui-dial.obj : gui-dial.c gui.h sysdep.h client.h game.h tiles.h player.h\
+ protocol.h game-enums.h player-enums.h cmsg_union.h pmsg_union.h\
+ protocol-enums.h
+client.obj : client.c sysdep.h client.h game.h tiles.h player.h protocol.h\
+ game-enums.h player-enums.h cmsg_union.h pmsg_union.h protocol-enums.h
+player.obj : player.c player-enums.c player.h tiles.h sysdep.h player-enums.h
+tiles.obj : tiles.c tiles.h sysdep.h
+fbtiles.obj : fbtiles.c
+protocol.obj : protocol.c enc_cmsg.c dec_cmsg.c enc_pmsg.c dec_pmsg.c\
+ cmsg_size.c pmsg_size.c protocol-enums.c protocol.h tiles.h player.h\
+ sysdep.h cmsg_union.h pmsg_union.h
+game.obj : game.c game-enums.c game.h protocol.h game-enums.h tiles.h\
+ player.h sysdep.h player-enums.h cmsg_union.h pmsg_union.h protocol-enums.h
+sysdep.obj : sysdep.c sysdep.h
+controller.obj : controller.c scoring.h sysdep.h tiles.h player.h protocol.h game.h controller.h
+scoring.obj : scoring.c tiles.h player.h controller.h sysdep.h game.h scoring.h
+greedy.obj : greedy.c client.h game.h tiles.h player.h protocol.h sysdep.h
+
+fbtiles.c : tiles-v1 makefallbacktiles
+	$(PERL) makefallbacktiles tiles-v1 >fbtiles.c
+enc_cmsg.c : protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -cmsg
+enc_pmsg.c : protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -pmsg
+dec_cmsg.c : protocol.h proto-decode-msg.pl
+	$(PERL) proto-decode-msg.pl -cmsg
+dec_pmsg.c : protocol.h proto-decode-msg.pl
+	$(PERL) proto-decode-msg.pl -pmsg
+
+cmsg_union.h : protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -cmsg
+cmsg_size.c : protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -cmsg
+pmsg_union.h : protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -pmsg
+pmsg_size.c : protocol.h proto-encode-msg.pl
+	$(PERL) proto-encode-msg.pl -pmsg
+
+game-enums.h : game.h make-enums.pl
+	$(PERL) make-enums.pl game.h
+game-enums.c : game.h make-enums.pl
+	$(PERL) make-enums.pl game.h
+player-enums.h : player.h make-enums.pl
+	$(PERL) make-enums.pl player.h
+player-enums.c : player.h make-enums.pl
+	$(PERL) make-enums.pl player.h
+protocol-enums.h : protocol.h make-enums.pl
+	$(PERL) make-enums.pl protocol.h
+protocol-enums.c : protocol.h make-enums.pl
+	$(PERL) make-enums.pl protocol.h
+tiles-enums.h : tiles.h make-enums.pl
+	$(PERL) make-enums.pl tiles.h
+tiles-enums.c : tiles.h make-enums.pl
+	$(PERL) make-enums.pl tiles.h
